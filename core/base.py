@@ -13,6 +13,11 @@ import cadquery as cq
 from config import config
 
 
+class ComplianceError(Exception):
+    """Raised when FAA 51% builder credit requirement is not met."""
+    pass
+
+
 class AircraftComponent(ABC):
     """
     Abstract base class for all aircraft components.
@@ -182,6 +187,9 @@ class FoamCore(AircraftComponent):
         """
         Generate 4-axis hot-wire G-code for CNC foam cutting.
 
+        If strict_compliance is enabled in config, blocks export when builder
+        credits are below 51% (FAA 14 CFR 21.191(g)).
+
         Args:
             output_path: Directory for G-code output
             kerf_offset: Wire kerf compensation (inches)
@@ -189,7 +197,24 @@ class FoamCore(AircraftComponent):
 
         Returns:
             Path to the G-code file
+
+        Raises:
+            ComplianceError: If strict_compliance is True and credits < 51%
         """
+        # Compliance gate check
+        credit = config.compliance.total_builder_credit
+        if config.compliance.strict_compliance and credit < 0.51:
+            raise ComplianceError(
+                f"Builder credit ({credit:.1%}) below FAA 51% requirement. "
+                f"Cannot export G-code with strict_compliance enabled."
+            )
+        elif credit < 0.51:
+            import logging
+            logging.warning(
+                "Builder credit (%.1f%%) below 51%%. G-code exported for "
+                "toolpath testing only -- not for production parts.", credit * 100
+            )
+
         # Defer to GCodeWriter for actual implementation
         from .manufacturing import GCodeWriter
 

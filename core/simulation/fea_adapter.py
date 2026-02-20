@@ -542,3 +542,224 @@ class CompositeFEAAdapter:
             z_bottom = z_top
 
         return results
+
+
+# ---------------------------------------------------------------------------
+# Torsional stiffness (Bredt-Batho) and Flutter analysis
+# ---------------------------------------------------------------------------
+
+@dataclass
+class TorsionSection:
+    """Closed thin-walled section for torsional stiffness (Bredt-Batho theory).
+
+    Reference: Bruhn, Analysis and Design of Flight Vehicle Structures, Ch. A6.
+
+    GJ = (4 * A_enclosed^2 * G) / sum(ds_i / t_i)
+
+    where ds_i and t_i are the length and thickness of each wall segment.
+    """
+
+    enclosed_area_sq_in: float
+    perimeter_segments: List[Tuple[float, float]]  # [(ds, t), ...] for each wall
+    shear_modulus_psi: float
+
+    @property
+    def gj(self) -> float:
+        """Torsional stiffness GJ (lb-in^2)."""
+        ds_over_t = sum(ds / t for ds, t in self.perimeter_segments)
+        if ds_over_t <= 0:
+            return 0.0
+        return 4.0 * self.enclosed_area_sq_in ** 2 * self.shear_modulus_psi / ds_over_t
+
+
+def analyze_torsion(section: TorsionSection, span_in: float,
+                    torque_in_lb: float) -> float:
+    """Return twist angle in radians for applied torque over span.
+
+    theta = T * L / GJ
+    """
+    gj = section.gj
+    if gj <= 0:
+        return float("inf")
+    return torque_in_lb * span_in / gj
+
+
+def build_wing_torsion_section(chord_in: float) -> TorsionSection:
+    """Build a D-box torsion section from wing geometry and config.
+
+    The D-box extends from the leading edge to the main spar (25% chord).
+    Wall segments: front spar web, upper skin, lower skin, aft spar cap closure.
+
+    Args:
+        chord_in: Local wing chord in inches
+
+    Returns:
+        TorsionSection with Bredt-Batho parameters
+    """
+    fp = config.flutter
+    mat = config.materials
+
+    spar_height = mat.spar_cap_plies * mat.uni_ply_thickness
+    d_box_depth = chord_in * 0.10  # Approximate airfoil thickness at spar
+    if d_box_depth < spar_height:
+        d_box_depth = spar_height
+
+    d_box_chord = 0.25 * chord_in  # LE to spar
+    enclosed_area = d_box_depth * d_box_chord
+
+    skin_t = fp.skin_thickness_in
+    spar_cap_w = mat.spar_cap_width
+
+    segments = [
+        (d_box_depth, skin_t * 2),    # Front spar web (inner + outer skin)
+        (d_box_chord, skin_t),         # Upper skin
+        (d_box_chord, skin_t),         # Lower skin
+        (d_box_depth, spar_cap_w),     # Aft closure (spar cap)
+    ]
+
+    return TorsionSection(
+        enclosed_area_sq_in=enclosed_area,
+        perimeter_segments=segments,
+        shear_modulus_psi=fp.shear_modulus_psi,
+    )
+
+
+class FlutterEstimator:
+    """Simplified bending-torsion flutter speed estimate.
+
+    References:
+    - Bisplinghoff, Ashley & Halfman, Aeroelasticity
+    - 14 CFR 23.629: V_flutter > safety_factor * V_ne
+
+    Also checks control surface mass balance (Bruhn Ch. C11).
+    """
+
+    def __init__(self, span_in: float = None, chord_in: float = None):
+        self.span_in = span_in or config.geometry.wing_span / 2
+        self.chord_in = chord_in or (
+            (config.geometry.wing_root_chord + config.geometry.wing_tip_chord) / 2
+        )
+        self.torsion_section = build_wing_torsion_section(self.chord_in)
+
+    def bending_frequency_hz(self) -> float:
+        """Natural bending frequency for cantilevered beam (1st mode).
+
+        omega_h = (3.52 / L^2) * sqrt(EI / mu)
+        where mu = mass per unit length (lb/ft -> slug/in requires conversion)
+        """
+        L = self.span_in
+        beam = BeamFEAAdapter()
+        EI = beam.section.modulus_psi * beam.section.inertia  # lb-in^2
+
+        # Estimate wing mass per unit length from config
+        wing_weight_lb = config.structural_weights.wing_weight_lb
+        half_span_in = config.geometry.wing_span / 2
+        # mu in slugs/in (weight / g / length)
+        g = 386.1  # in/s^2
+        mu = wing_weight_lb / g / (2.0 * half_span_in)  # both halves contribute
+
+        omega_h = (3.52 / L ** 2) * math.sqrt(EI / mu)  # rad/s
+        return omega_h / (2.0 * math.pi)
+
+    def torsion_frequency_hz(self) -> float:
+        """Natural torsion frequency for cantilevered beam (1st mode).
+
+        omega_theta = (pi / (2*L)) * sqrt(GJ / I_theta)
+        where I_theta = polar mass moment of inertia per unit length
+        """
+        L = self.span_in
+        GJ = self.torsion_section.gj
+
+        # Estimate polar mass moment per unit length
+        # I_theta ~ mu * c^2 / 12  (thin plate approximation)
+        wing_weight_lb = config.structural_weights.wing_weight_lb
+        half_span_in = config.geometry.wing_span / 2
+        g = 386.1  # in/s^2
+        mu = wing_weight_lb / g / (2.0 * half_span_in)
+        I_theta = mu * self.chord_in ** 2 / 12.0
+
+        if I_theta <= 0:
+            return 0.0
+
+        omega_theta = (math.pi / (2.0 * L)) * math.sqrt(GJ / I_theta)
+        return omega_theta / (2.0 * math.pi)
+
+    def flutter_speed_ktas(self) -> float:
+        """Estimated flutter speed using simplified Theodorsen approach.
+
+        For frequency ratio > 1.5, flutter-free below:
+        V_f_approx = omega_theta * b / pi  (in ft/s, then convert to KTAS)
+        """
+        omega_theta = self.torsion_frequency_hz() * 2.0 * math.pi  # back to rad/s
+        b = self.span_in / 12.0  # to feet
+
+        if omega_theta <= 0:
+            return 0.0
+
+        v_flutter_fps = omega_theta * b / math.pi
+        v_flutter_ktas = v_flutter_fps / 1.6878  # ft/s to knots
+        return v_flutter_ktas
+
+    def check_flutter(self) -> Dict[str, float]:
+        """Check flutter margin against V_ne per 14 CFR 23.629.
+
+        Returns dict with flutter_speed_ktas, v_ne_ktas, safety_factor,
+        required_speed_ktas, margin, is_safe.
+        """
+        fp = config.flutter
+        fc = config.flight_condition
+
+        v_flutter = self.flutter_speed_ktas()
+        v_ne = fc.v_ne_ktas
+        required = v_ne * fp.flutter_safety_factor
+
+        freq_h = self.bending_frequency_hz()
+        freq_theta = self.torsion_frequency_hz()
+        freq_ratio = freq_theta / freq_h if freq_h > 0 else 0.0
+
+        is_safe = v_flutter >= required
+
+        return {
+            "flutter_speed_ktas": v_flutter,
+            "v_ne_ktas": v_ne,
+            "safety_factor": fp.flutter_safety_factor,
+            "required_speed_ktas": required,
+            "margin_ktas": v_flutter - required,
+            "is_safe": is_safe,
+            "bending_freq_hz": freq_h,
+            "torsion_freq_hz": freq_theta,
+            "frequency_ratio": freq_ratio,
+            "gj_lb_in2": self.torsion_section.gj,
+        }
+
+    @staticmethod
+    def check_control_surface_balance() -> Dict[str, Dict[str, float]]:
+        """Check control surface mass balance declarations.
+
+        A surface with CG behind the hinge line (< 100% balance) is at
+        risk of flutter. This is a CONFIG declaration check: it enforces
+        that the builder has committed to proper mass balancing.
+
+        Returns dict per surface: {balance_pct, is_safe, message}
+        """
+        fp = config.flutter
+        surfaces = {
+            "elevon": fp.elevon_mass_balance_pct,
+            "aileron": fp.aileron_mass_balance_pct,
+        }
+        results = {}
+        for name, pct in surfaces.items():
+            is_safe = pct >= 100.0
+            if is_safe:
+                msg = f"{name}: {pct:.0f}% mass balanced (SAFE)"
+            else:
+                msg = (
+                    f"DANGER: {name} mass balance {pct:.0f}% < 100%. "
+                    f"Control surface flutter HIGHLY LIKELY above V_ne."
+                )
+            results[name] = {
+                "balance_pct": pct,
+                "is_safe": is_safe,
+                "message": msg,
+            }
+        return results

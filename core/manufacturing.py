@@ -164,22 +164,33 @@ class GCodeWriter:
 
         return np.array(points[:num_points])
 
-    def _apply_kerf_offset(self, points: np.ndarray, offset: float) -> np.ndarray:
+    def _apply_kerf_offset(self, points: np.ndarray, offset,
+                           ) -> np.ndarray:
         """
         Apply kerf compensation by offsetting points inward.
 
         For foam cutting, we offset inward (toward the center of the airfoil)
         to account for material removed by the hot wire.
 
+        Supports per-point kerf via array offset (for velocity-coupled kerf).
+
         Args:
             points: Nx2 array of profile points
-            offset: Kerf offset distance (positive = inward)
+            offset: Scalar kerf distance or Nx1 array of per-point offsets
 
         Returns:
             Nx2 array of offset points
         """
         n = len(points)
         offset_points = np.zeros_like(points)
+
+        # Support scalar or per-point offset
+        if np.isscalar(offset):
+            offsets = np.full(n, offset)
+        else:
+            offsets = np.asarray(offset)
+            if len(offsets) != n:
+                offsets = np.full(n, float(offsets[0]) if len(offsets) > 0 else 0.0)
 
         for i in range(n):
             # Get neighboring points for normal calculation
@@ -205,7 +216,7 @@ class GCodeWriter:
                 if np.dot(normal, to_centroid) < 0:
                     normal = -normal
 
-                offset_points[i] = points[i] + offset * normal
+                offset_points[i] = points[i] + offsets[i] * normal
             else:
                 offset_points[i] = points[i]
 
@@ -217,6 +228,10 @@ class GCodeWriter:
 
         Both profiles are sampled at the same parametric positions (0 to 1),
         ensuring the wire cuts corresponding features at the same time.
+
+        Enhancements:
+        - Curvature-based slowdown at LE/TE (> 0.5 rad turning angle)
+        - Velocity ratio clamping (max 2.5:1 root/tip speed)
 
         Args:
             pts_root: Nx2 array of root profile points
@@ -239,14 +254,54 @@ class GCodeWriter:
         avg_segment = np.mean(max_segments) if len(max_segments) > 0 else 1.0
         feed_rates = self.base_feed * (avg_segment / np.maximum(max_segments, 1e-6))
 
+        # === Curvature-based feed rate modulation ===
+        # At high-curvature points (LE/TE), reduce feed to prevent wire drag.
+        # Curvature measured as turning angle between consecutive segments.
+        for i in range(1, len(root_segments)):
+            for segments in (root_segments, tip_segments):
+                if i < len(segments):
+                    v1 = pts_root[i] - pts_root[i - 1] if segments is root_segments else pts_tip[i] - pts_tip[i - 1]
+                    v2 = pts_root[i + 1] - pts_root[i] if segments is root_segments and i + 1 < n_points else pts_tip[i + 1] - pts_tip[i] if i + 1 < n_points else v1
+                    cross = v1[0] * v2[1] - v1[1] * v2[0]
+                    dot = np.dot(v1, v2)
+                    angle = abs(np.arctan2(cross, dot))
+                    if angle > 0.5:  # > ~29 deg turning angle
+                        feed_rates[i - 1] *= 0.6  # 40% slowdown at LE
+
+        # === Velocity ratio clamping ===
+        # Prevent root/tip speed differential exceeding 2.5:1
+        for i in range(len(root_segments)):
+            if root_segments[i] > 1e-10 and tip_segments[i] > 1e-10:
+                ratio = max(root_segments[i], tip_segments[i]) / min(root_segments[i], tip_segments[i])
+                if ratio > 2.5:
+                    feed_rates[i] *= 1.25  # Speed up to reduce over-melt
+
         # Clamp feed rates to reasonable range
-        feed_rates = np.clip(feed_rates, self.base_feed * 0.5, self.base_feed * 2.0)
+        feed_rates = np.clip(feed_rates, self.base_feed * 0.3, self.base_feed * 2.0)
 
         return CutPath(
             root_points=pts_root[:n_points],
             tip_points=pts_tip[:n_points],
             feed_rates=feed_rates,
         )
+
+    @staticmethod
+    def calculate_velocity_coupled_kerf(base_kerf: float, base_feed: float,
+                                         feed_rates: np.ndarray) -> np.ndarray:
+        """Compute per-point kerf offsets coupled to feed rate.
+
+        Slower feed -> longer dwell -> wider kerf due to radiant heat.
+        kerf_local = base_kerf * sqrt(base_feed / local_feed)
+
+        Args:
+            base_kerf: Baseline kerf offset in inches
+            base_feed: Baseline feed rate in/min
+            feed_rates: Array of local feed rates
+
+        Returns:
+            Array of per-point kerf offsets
+        """
+        return base_kerf * np.sqrt(base_feed / np.maximum(feed_rates, 0.1))
 
     def _find_start_point(self, points: np.ndarray) -> int:
         """

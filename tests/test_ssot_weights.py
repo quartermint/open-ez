@@ -22,7 +22,7 @@ sys.path.insert(0, str(REPO_ROOT))
 sys.modules.setdefault("cadquery", MagicMock())
 sys.modules.setdefault("OCP", MagicMock())
 
-from core.analysis import PhysicsEngine, WeightBalance  # noqa: E402
+from core.analysis import PhysicsEngine  # noqa: E402
 from core.atmosphere import density, viscosity, temperature, pressure, speed_of_sound  # noqa: E402
 from config.aircraft_config import AircraftConfig  # noqa: E402
 
@@ -31,8 +31,8 @@ from config.aircraft_config import AircraftConfig  # noqa: E402
 # Atmosphere model tests (ISA standard, Anderson Ch. 3)
 # ---------------------------------------------------------------------------
 
-class TestAtmosphereModel:
 
+class TestAtmosphereModel:
     def test_sea_level_density(self):
         """ISA sea-level density is 0.002377 slug/ft^3."""
         rho_sl = density(0.0)
@@ -82,8 +82,8 @@ class TestAtmosphereModel:
 # Weight & Balance SSOT tests
 # ---------------------------------------------------------------------------
 
-class TestWeightBalanceSSoT:
 
+class TestWeightBalanceSSoT:
     def test_empty_weight_matches_config_sum(self):
         """Default config structural + propulsion weights should sum correctly."""
         engine = PhysicsEngine()
@@ -91,13 +91,6 @@ class TestWeightBalanceSSoT:
         total = wb.total_weight
 
         # Structural items from config defaults
-        cfg = AircraftConfig()
-        sw = cfg.structural_weights
-        structural_sum = (
-            sw.wing_weight_lb + sw.canard_weight_lb + sw.fuselage_weight_lb
-            + sw.landing_gear_weight_lb + sw.electrical_weight_lb
-            + sw.instruments_weight_lb + sw.interior_weight_lb
-        )
         # structural_sum = 85 + 25 + 120 + 45 + 25 + 15 + 20 = 335 lb
 
         # Propulsion adds engine + prop + accessories
@@ -163,8 +156,8 @@ class TestWeightBalanceSSoT:
 # Reynolds number tests
 # ---------------------------------------------------------------------------
 
-class TestReynoldsNumber:
 
+class TestReynoldsNumber:
     def test_reynolds_8000ft_regression(self):
         """Reynolds at 160 KTAS, 50\" chord, 8000 ft must regress within 2%."""
         re = PhysicsEngine.calculate_reynolds(160.0, 50.0, 8000.0)
@@ -198,8 +191,8 @@ class TestReynoldsNumber:
 # CG envelope margin tests
 # ---------------------------------------------------------------------------
 
-class TestCGEnvelope:
 
+class TestCGEnvelope:
     def test_envelope_returns_four_scenarios(self):
         """calculate_envelope_margins() must return all 4 corner scenarios."""
         engine = PhysicsEngine()

@@ -15,6 +15,7 @@ from config import config
 
 class ComplianceError(Exception):
     """Raised when FAA 51% builder credit requirement is not met."""
+
     pass
 
 
@@ -210,9 +211,11 @@ class FoamCore(AircraftComponent):
             )
         elif credit < 0.51:
             import logging
+
             logging.warning(
                 "Builder credit (%.1f%%) below 51%%. G-code exported for "
-                "toolpath testing only -- not for production parts.", credit * 100
+                "toolpath testing only -- not for production parts.",
+                credit * 100,
             )
 
         # Defer to GCodeWriter for actual implementation
@@ -243,7 +246,7 @@ class Bulkhead(AircraftComponent):
         name: str,
         station: float,
         description: str = "",
-        thickness: Optional[float] = None
+        thickness: Optional[float] = None,
     ):
         """
         Initialize a bulkhead at a fuselage station.
@@ -272,7 +275,9 @@ class Bulkhead(AircraftComponent):
         """Export the bulkhead profile as DXF for routing or tracing."""
         profile = self.get_profile()
         output_file = output_path / f"{self.name}.dxf"
-        cq.exporters.export(cq.Workplane("XY").add(profile), str(output_file), exportType="DXF")
+        cq.exporters.export(
+            cq.Workplane("XY").add(profile), str(output_file), exportType="DXF"
+        )
         return output_file
 
     def manufacturing_plan(self, output_path: Path) -> Dict[str, Any]:
@@ -281,7 +286,9 @@ class Bulkhead(AircraftComponent):
         intents = config.manufacturing.component_intents.get("bulkhead")
 
         dxf_path = self.export_dxf(output_path)
-        stl_path = self.export_stl(output_path, tolerance=intents.printable_jigs.tolerance)
+        stl_path = self.export_stl(
+            output_path, tolerance=intents.printable_jigs.tolerance
+        )
         step_path = self.export_step(output_path)
 
         return {

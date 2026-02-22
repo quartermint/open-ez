@@ -11,7 +11,6 @@ Validates:
 6. Control surface balance < 100% triggers DANGER
 """
 
-import math
 import sys
 from pathlib import Path
 from unittest.mock import MagicMock
@@ -23,14 +22,15 @@ sys.modules.setdefault("cadquery", MagicMock())
 sys.modules.setdefault("OCP", MagicMock())
 
 from core.simulation.fea_adapter import (  # noqa: E402
-    TorsionSection, analyze_torsion, build_wing_torsion_section,
+    TorsionSection,
+    analyze_torsion,
+    build_wing_torsion_section,
     FlutterEstimator,
 )
 from config import config  # noqa: E402
 
 
 class TestTorsionSection:
-
     def test_gj_known_section(self):
         """GJ for a simple rectangular tube with known parameters."""
         # 10" x 5" tube, 0.05" thick walls, G = 1e6 psi
@@ -42,7 +42,7 @@ class TestTorsionSection:
             perimeter_segments=[(10.0, 0.05), (5.0, 0.05), (10.0, 0.05), (5.0, 0.05)],
             shear_modulus_psi=1.0e6,
         )
-        expected_gj = 4 * 50 ** 2 * 1e6 / 600
+        expected_gj = 4 * 50**2 * 1e6 / 600
         assert abs(section.gj - expected_gj) / expected_gj < 0.001
 
     def test_gj_wing_dbox_range(self):
@@ -51,7 +51,9 @@ class TestTorsionSection:
         Bredt-Batho for closed thin-wall sections produces GJ in millions
         due to the A_enclosed^2 term (A ~ 62 sq in for avg chord D-box).
         """
-        avg_chord = (config.geometry.wing_root_chord + config.geometry.wing_tip_chord) / 2
+        avg_chord = (
+            config.geometry.wing_root_chord + config.geometry.wing_tip_chord
+        ) / 2
         section = build_wing_torsion_section(avg_chord)
         gj = section.gj
         assert 1e6 < gj < 1e8, f"GJ = {gj:.0f} outside expected range"
@@ -71,7 +73,6 @@ class TestTorsionSection:
 
 
 class TestFlutterEstimator:
-
     def test_bending_frequency_positive(self):
         """Natural bending frequency must be a positive number."""
         est = FlutterEstimator()
@@ -96,7 +97,6 @@ class TestFlutterEstimator:
     def test_halved_gj_reduces_flutter_speed(self):
         """Halving GJ should reduce flutter speed and may trigger warning."""
         est = FlutterEstimator()
-        original_gj = est.torsion_section.gj
         v_original = est.flutter_speed_ktas()
 
         # Halve GJ by halving shear modulus
@@ -113,9 +113,16 @@ class TestFlutterEstimator:
         est = FlutterEstimator()
         result = est.check_flutter()
         required_keys = {
-            "flutter_speed_ktas", "v_ne_ktas", "safety_factor",
-            "required_speed_ktas", "margin_ktas", "is_safe",
-            "bending_freq_hz", "torsion_freq_hz", "frequency_ratio", "gj_lb_in2",
+            "flutter_speed_ktas",
+            "v_ne_ktas",
+            "safety_factor",
+            "required_speed_ktas",
+            "margin_ktas",
+            "is_safe",
+            "bending_freq_hz",
+            "torsion_freq_hz",
+            "frequency_ratio",
+            "gj_lb_in2",
         }
         assert required_keys.issubset(result.keys())
 
@@ -128,7 +135,6 @@ class TestFlutterEstimator:
 
 
 class TestControlSurfaceBalance:
-
     def test_default_balance_safe(self):
         """Default config (100% balance) should pass."""
         results = FlutterEstimator.check_control_surface_balance()

@@ -10,7 +10,6 @@ Validates:
 5. Canard AC uses MAC, not root chord
 """
 
-import math
 import sys
 from pathlib import Path
 from unittest.mock import MagicMock
@@ -22,12 +21,10 @@ sys.modules.setdefault("cadquery", MagicMock())
 sys.modules.setdefault("OCP", MagicMock())
 
 from core.analysis import PhysicsEngine  # noqa: E402
-from config.aircraft_config import AircraftConfig  # noqa: E402
 from config import config  # noqa: E402
 
 
 class TestCanardStallPriority:
-
     def test_default_config_canard_stalls_first(self):
         """Default config must show canard stalling >= 2 deg before wing."""
         engine = PhysicsEngine()
@@ -79,7 +76,6 @@ class TestCanardStallPriority:
 
 
 class TestDownwashModel:
-
     def test_np_with_vertical_separation(self):
         """NP should shift forward with proper downwash model vs no downwash."""
         engine = PhysicsEngine()
@@ -122,11 +118,10 @@ class TestDownwashModel:
 
 
 class TestCanardMAC:
-
     def test_canard_mac_less_than_root_chord(self):
         """Canard MAC for tapered canard should be less than root chord."""
         cr = config.geometry.canard_root_chord  # 17.0
-        ct = config.geometry.canard_tip_chord   # 13.5
+        ct = config.geometry.canard_tip_chord  # 13.5
         taper = ct / cr
         mac = (2 / 3) * cr * (1 + taper + taper**2) / (1 + taper)
         assert mac < cr, f"MAC {mac:.2f} should be < root chord {cr}"

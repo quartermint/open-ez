@@ -54,8 +54,10 @@ def _run_export_gcode(strict, credit_sum):
         tmp_dir = Path("/tmp/test_compliance_gate")
 
         # Patch GCodeWriter at its source module and metadata to avoid real I/O
-        with patch("core.manufacturing.GCodeWriter") as mock_gcw, \
-             patch.object(component, "_write_artifact_metadata"):
+        with (
+            patch("core.manufacturing.GCodeWriter") as mock_gcw,
+            patch.object(component, "_write_artifact_metadata"),
+        ):
             mock_gcw.return_value.write.return_value = tmp_dir / "test_part.tap"
             return component.export_gcode(tmp_dir)
     finally:
@@ -64,7 +66,6 @@ def _run_export_gcode(strict, credit_sum):
 
 
 class TestComplianceGate:
-
     def test_lenient_mode_allows_low_credit(self):
         """With strict_compliance=False, low credit should not block export."""
         result = _run_export_gcode(strict=False, credit_sum=0.10)

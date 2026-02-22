@@ -19,6 +19,7 @@ logger = logging.getLogger(__name__)
 
 if TYPE_CHECKING:
     from .base import FoamCore
+    from .structures import BulkheadProfile, Fuselage
 
 from .base import AircraftComponent  # noqa: E402
 from config import config  # noqa: E402
@@ -164,8 +165,11 @@ class GCodeWriter:
 
         return np.array(points[:num_points])
 
-    def _apply_kerf_offset(self, points: np.ndarray, offset,
-                           ) -> np.ndarray:
+    def _apply_kerf_offset(
+        self,
+        points: np.ndarray,
+        offset,
+    ) -> np.ndarray:
         """
         Apply kerf compensation by offsetting points inward.
 
@@ -274,7 +278,9 @@ class GCodeWriter:
         # Prevent root/tip speed differential exceeding 2.5:1
         for i in range(len(root_segments)):
             if root_segments[i] > 1e-10 and tip_segments[i] > 1e-10:
-                ratio = max(root_segments[i], tip_segments[i]) / min(root_segments[i], tip_segments[i])
+                ratio = max(root_segments[i], tip_segments[i]) / min(
+                    root_segments[i], tip_segments[i]
+                )
                 if ratio > 2.5:
                     feed_rates[i] *= 1.25  # Speed up to reduce over-melt
 
@@ -288,8 +294,9 @@ class GCodeWriter:
         )
 
     @staticmethod
-    def calculate_velocity_coupled_kerf(base_kerf: float, base_feed: float,
-                                         feed_rates: np.ndarray) -> np.ndarray:
+    def calculate_velocity_coupled_kerf(
+        base_kerf: float, base_feed: float, feed_rates: np.ndarray
+    ) -> np.ndarray:
         """Compute per-point kerf offsets coupled to feed rate.
 
         Slower feed -> longer dwell -> wider kerf due to radiant heat.
@@ -861,10 +868,7 @@ class FuselageJigFactory:
         rail_spacing = table_width - 2 * rail_w
         rail_length = max(stations) - min(stations) + 24.0  # Extra length at ends
 
-        left_rail = (
-            cq.Workplane("XY")
-            .box(rail_length, rail_w, rail_h, centered=False)
-        )
+        left_rail = cq.Workplane("XY").box(rail_length, rail_w, rail_h, centered=False)
         right_rail = left_rail.translate((0, rail_spacing + rail_w, 0))
 
         assembly.add(left_rail, name="rail_left", color=cq.Color("burlywood"))
@@ -879,8 +883,9 @@ class FuselageJigFactory:
                 .box(rail_w, table_width, rail_h, centered=False)
                 .translate((0, 0, rail_h))  # Stack on top of rails
             )
-            assembly.add(crossbrace, name=f"brace_FS{station:.0f}",
-                        color=cq.Color("burlywood"))
+            assembly.add(
+                crossbrace, name=f"brace_FS{station:.0f}", color=cq.Color("burlywood")
+            )
 
         # Add centerline reference groove
         centerline_y = table_width / 2
@@ -924,11 +929,7 @@ class FuselageJigFactory:
         thickness = FuselageJigFactory.SADDLE_THICKNESS
 
         # Create base plate
-        saddle = (
-            cq.Workplane("XY")
-            .rect(base_width, base_height)
-            .extrude(thickness)
-        )
+        saddle = cq.Workplane("XY").rect(base_width, base_height).extrude(thickness)
 
         # Create bulkhead pocket (negative of profile + tolerance)
         pocket_w = profile.width / 2 + tolerance
@@ -1082,7 +1083,9 @@ class FuselageJigFactory:
         slabs: Dict[str, cq.Workplane] = {}
 
         # Calculate flat pattern dimensions
-        total_length = max(p.station for p in profiles) - min(p.station for p in profiles)
+        _total_length = max(p.station for p in profiles) - min(
+            p.station for p in profiles
+        )
         max_height = max(p.height for p in profiles)
 
         # Side panels (left and right are symmetric)
@@ -1119,7 +1122,9 @@ class FuselageJigFactory:
                     .center(x, 0)
                     .rect(0.125, height_at_x)
                     .extrude(score_depth)
-                    .translate((0, 0, config.materials.foam_core_thickness - score_depth))
+                    .translate(
+                        (0, 0, config.materials.foam_core_thickness - score_depth)
+                    )
                 )
                 side_panel = side_panel.cut(score)
 
@@ -1207,8 +1212,7 @@ class FuselageJigFactory:
 
             # Find profiles within this block
             block_profiles = [
-                p for p in profiles
-                if block_start <= p.station <= block_end
+                p for p in profiles if block_start <= p.station <= block_end
             ]
 
             if not block_profiles:
@@ -1261,7 +1265,7 @@ class FuselageJigFactory:
             )
             block = block.cut(label)
 
-            slabs[f"block_{i+1}"] = block
+            slabs[f"block_{i + 1}"] = block
 
         return slabs
 
@@ -1301,7 +1305,9 @@ class FuselageJigFactory:
                     generated_files.append(saddle_path)
                     logger.info(f"Generated saddle: {saddle_path.name}")
                 except Exception as e:
-                    logger.warning(f"Could not generate saddle for FS{profile.station}: {e}")
+                    logger.warning(
+                        f"Could not generate saddle for FS{profile.station}: {e}"
+                    )
 
         # Generate foam slabs
         try:

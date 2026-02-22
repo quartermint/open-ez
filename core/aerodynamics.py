@@ -205,10 +205,11 @@ class Airfoil:
         if len(self._x) != len(other._x):
             # Resample other to match self's point count
             from scipy.interpolate import interp1d
+
             t_self = np.linspace(0, 1, len(self._x))
             t_other = np.linspace(0, 1, len(other._x))
-            fx = interp1d(t_other, other._x, kind='linear')
-            fy = interp1d(t_other, other._y, kind='linear')
+            fx = interp1d(t_other, other._x, kind="linear")
+            fy = interp1d(t_other, other._y, kind="linear")
             other_x = fx(t_self)
             other_y = fy(t_self)
         else:
@@ -252,7 +253,7 @@ class Airfoil:
         te_idx = np.argmax(x)
 
         # Upper surface: indices 0 .. te_idx (LE -> TE)
-        xu, yu = x[:te_idx + 1], y[:te_idx + 1]
+        xu, yu = x[: te_idx + 1], y[: te_idx + 1]
         # Lower surface: indices te_idx .. end (TE -> LE)
         xl, yl = x[te_idx:], y[te_idx:]
 
@@ -290,12 +291,12 @@ class Airfoil:
         # Walk backward from upper TE and forward from lower start.
         nu, nl = len(xu_off), len(xl_off)
         cut_u = nu  # Default: keep all upper points
-        cut_l = 0   # Default: keep all lower points
+        cut_l = 0  # Default: keep all lower points
 
         min_check = min(nu, nl)
         for i in range(min_check):
             u_idx = nu - 1 - i  # Walk backward from upper TE
-            l_idx = i            # Walk forward from lower TE
+            l_idx = i  # Walk forward from lower TE
             if yu_off[u_idx] <= yl_off[l_idx]:
                 # Collapse detected
                 avg_y = (yu_off[u_idx] + yl_off[l_idx]) / 2
@@ -318,7 +319,7 @@ class Airfoil:
             name=f"{self.name}_offset_{thickness_in:.3f}in",
             x_upper=xu_off,
             y_upper=yu_off,
-            x_lower=xl_off[::-1],   # Reverse: TE->LE becomes LE->TE
+            x_lower=xl_off[::-1],  # Reverse: TE->LE becomes LE->TE
             y_lower=yl_off[::-1],
         )
         return Airfoil(new_coords, n_points=len(xu_off) + len(xl_off) - 1, smooth=False)

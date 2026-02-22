@@ -37,13 +37,13 @@ def temperature(altitude_ft: float) -> float:
 def pressure(altitude_ft: float) -> float:
     """ISA pressure in lb/ft^2."""
     t_ratio = temperature(altitude_ft) / _T0
-    return _P0 * t_ratio ** 5.2561
+    return _P0 * t_ratio**5.2561
 
 
 def density(altitude_ft: float) -> float:
     """ISA air density in slug/ft^3."""
     t_ratio = temperature(altitude_ft) / _T0
-    return _RHO0 * t_ratio ** 4.2561
+    return _RHO0 * t_ratio**4.2561
 
 
 def viscosity(altitude_ft: float) -> float:

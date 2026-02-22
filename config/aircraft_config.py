@@ -120,7 +120,9 @@ class GeometricParams:
     fs_tail: float = 214.0  # Tail cone terminus
 
     # === CANARD DOWNWASH ===
-    canard_vertical_offset_in: float = 12.0  # Vertical separation canard AC to wing plane
+    canard_vertical_offset_in: float = (
+        12.0  # Vertical separation canard AC to wing plane
+    )
 
     # === ERGONOMICS ===
     cockpit_width: float = 23.0  # F-22 interior width
@@ -134,17 +136,33 @@ class GeometricParams:
         Uses MAC-based quarter chord with sweep offset for both surfaces.
         """
         import math
+
         # Wing AC: MAC quarter-chord with sweep offset
         taper_w = self.wing_tip_chord / self.wing_root_chord
-        mac_w = (2 / 3) * self.wing_root_chord * (1 + taper_w + taper_w**2) / (1 + taper_w)
+        mac_w = (
+            (2 / 3) * self.wing_root_chord * (1 + taper_w + taper_w**2) / (1 + taper_w)
+        )
         y_mac_w = (self.wing_span / 2 / 3) * (1 + 2 * taper_w) / (1 + taper_w)
-        wing_ac = self.fs_wing_le + y_mac_w * math.tan(math.radians(self.wing_sweep_le)) + 0.25 * mac_w
+        wing_ac = (
+            self.fs_wing_le
+            + y_mac_w * math.tan(math.radians(self.wing_sweep_le))
+            + 0.25 * mac_w
+        )
 
         # Canard AC: MAC quarter-chord with sweep offset
         taper_c = self.canard_tip_chord / self.canard_root_chord
-        mac_c = (2 / 3) * self.canard_root_chord * (1 + taper_c + taper_c**2) / (1 + taper_c)
+        mac_c = (
+            (2 / 3)
+            * self.canard_root_chord
+            * (1 + taper_c + taper_c**2)
+            / (1 + taper_c)
+        )
         y_mac_c = (self.canard_span / 2 / 3) * (1 + 2 * taper_c) / (1 + taper_c)
-        canard_ac = self.fs_canard_le + y_mac_c * math.tan(math.radians(self.canard_sweep_le)) + 0.25 * mac_c
+        canard_ac = (
+            self.fs_canard_le
+            + y_mac_c * math.tan(math.radians(self.canard_sweep_le))
+            + 0.25 * mac_c
+        )
 
         return wing_ac - canard_ac
 
@@ -570,8 +588,12 @@ class AircraftConfig:
     compliance: ComplianceParams = field(default_factory=ComplianceParams)
     strakes: StrakeConfig = field(default_factory=StrakeConfig)
     propulsion: PropulsionConfig = field(default_factory=PropulsionConfig)
-    flight_condition: FlightConditionParams = field(default_factory=FlightConditionParams)
-    structural_weights: StructuralWeightParams = field(default_factory=StructuralWeightParams)
+    flight_condition: FlightConditionParams = field(
+        default_factory=FlightConditionParams
+    )
+    structural_weights: StructuralWeightParams = field(
+        default_factory=StructuralWeightParams
+    )
     aero_limits: AeroLimitsParams = field(default_factory=AeroLimitsParams)
     flutter: FlutterParams = field(default_factory=FlutterParams)
 

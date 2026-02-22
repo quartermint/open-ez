@@ -129,17 +129,32 @@ class PhysicsEngine:
         sw = config.structural_weights
 
         # Structural weights from config
-        self._weight_balance.add_item("Wing Structure", sw.wing_weight_lb, sw.wing_arm_in, "fixed")
-        self._weight_balance.add_item("Canard", sw.canard_weight_lb, sw.canard_arm_in, "fixed")
-        self._weight_balance.add_item("Fuselage", sw.fuselage_weight_lb, sw.fuselage_arm_in, "fixed")
-        self._weight_balance.add_item("Landing Gear", sw.landing_gear_weight_lb, sw.landing_gear_arm_in, "fixed")
-        self._weight_balance.add_item("Electrical", sw.electrical_weight_lb, sw.electrical_arm_in, "fixed")
-        self._weight_balance.add_item("Instruments", sw.instruments_weight_lb, sw.instruments_arm_in, "fixed")
-        self._weight_balance.add_item("Interior", sw.interior_weight_lb, sw.interior_arm_in, "fixed")
+        self._weight_balance.add_item(
+            "Wing Structure", sw.wing_weight_lb, sw.wing_arm_in, "fixed"
+        )
+        self._weight_balance.add_item(
+            "Canard", sw.canard_weight_lb, sw.canard_arm_in, "fixed"
+        )
+        self._weight_balance.add_item(
+            "Fuselage", sw.fuselage_weight_lb, sw.fuselage_arm_in, "fixed"
+        )
+        self._weight_balance.add_item(
+            "Landing Gear", sw.landing_gear_weight_lb, sw.landing_gear_arm_in, "fixed"
+        )
+        self._weight_balance.add_item(
+            "Electrical", sw.electrical_weight_lb, sw.electrical_arm_in, "fixed"
+        )
+        self._weight_balance.add_item(
+            "Instruments", sw.instruments_weight_lb, sw.instruments_arm_in, "fixed"
+        )
+        self._weight_balance.add_item(
+            "Interior", sw.interior_weight_lb, sw.interior_arm_in, "fixed"
+        )
 
         # Propulsion weights from factory (engine, prop, accessories)
         try:
             from .systems import get_propulsion_system
+
             propulsion = get_propulsion_system()
             for item in propulsion.get_weight_items():
                 self._weight_balance.add_item(
@@ -148,9 +163,15 @@ class PhysicsEngine:
         except (ImportError, Exception):
             # Fallback: use hardcoded O-235 weights if propulsion module unavailable
             fs_firewall = config.geometry.fs_firewall
-            self._weight_balance.add_item("Engine (O-235)", 250.0, fs_firewall + 15.0, "propulsion")
-            self._weight_balance.add_item("Prop & Spinner", 25.0, fs_firewall + 25.0, "propulsion")
-            self._weight_balance.add_item("Engine Accessories", 30.0, fs_firewall + 10.0, "propulsion")
+            self._weight_balance.add_item(
+                "Engine (O-235)", 250.0, fs_firewall + 15.0, "propulsion"
+            )
+            self._weight_balance.add_item(
+                "Prop & Spinner", 25.0, fs_firewall + 25.0, "propulsion"
+            )
+            self._weight_balance.add_item(
+                "Engine Accessories", 30.0, fs_firewall + 10.0, "propulsion"
+            )
 
     def calculate_mac(self) -> Tuple[float, float]:
         """
@@ -187,24 +208,33 @@ class PhysicsEngine:
         # === Strake segment ===
         # The strakes extend from the fuselage to BL 23.3, contributing
         # significant lifting area near the root.
-        strake_cfg = config.strakes if hasattr(config, 'strakes') else None
+        strake_cfg = config.strakes if hasattr(config, "strakes") else None
         if strake_cfg is not None:
             strake_span = 23.3  # BL at wing root junction
-            strake_chord_inboard = strake_cfg.fs_trailing_edge - strake_cfg.fs_leading_edge
+            strake_chord_inboard = (
+                strake_cfg.fs_trailing_edge - strake_cfg.fs_leading_edge
+            )
             strake_chord_outboard = cr  # Blends into wing root
             strake_avg_chord = (strake_chord_inboard + strake_chord_outboard) / 2
             s_strake_side = strake_avg_chord * strake_span  # sq in, one side
 
             # Strake MAC (trapezoidal)
-            strake_taper = strake_chord_outboard / strake_chord_inboard if strake_chord_inboard > 0 else 1.0
+            strake_taper = (
+                strake_chord_outboard / strake_chord_inboard
+                if strake_chord_inboard > 0
+                else 1.0
+            )
             mac_strake = (
-                (2 / 3) * strake_chord_inboard
+                (2 / 3)
+                * strake_chord_inboard
                 * (1 + strake_taper + strake_taper**2)
                 / (1 + strake_taper)
             )
 
             # Strake MAC LE location (strake starts at fs_leading_edge)
-            y_mac_strake = (strake_span / 3) * (1 + 2 * strake_taper) / (1 + strake_taper)
+            _y_mac_strake = (
+                (strake_span / 3) * (1 + 2 * strake_taper) / (1 + strake_taper)
+            )
             x_mac_le_strake = strake_cfg.fs_leading_edge  # Minimal sweep on strake
 
             # === Area-weighted combination ===
@@ -248,11 +278,15 @@ class PhysicsEngine:
         # Canard AC at 25% MAC with sweep offset (matching wing pattern)
         canard_taper = self.geo.canard_tip_chord / self.geo.canard_root_chord
         mac_canard = (
-            (2 / 3) * self.geo.canard_root_chord
-            * (1 + canard_taper + canard_taper**2) / (1 + canard_taper)
+            (2 / 3)
+            * self.geo.canard_root_chord
+            * (1 + canard_taper + canard_taper**2)
+            / (1 + canard_taper)
         )
         canard_semi_span = self.geo.canard_span / 2
-        y_mac_canard = (canard_semi_span / 3) * (1 + 2 * canard_taper) / (1 + canard_taper)
+        y_mac_canard = (
+            (canard_semi_span / 3) * (1 + 2 * canard_taper) / (1 + canard_taper)
+        )
         x_mac_le_canard = self.geo.fs_canard_le + y_mac_canard * math.tan(
             math.radians(self.geo.canard_sweep_le)
         )
@@ -272,14 +306,18 @@ class PhysicsEngine:
         taper_wing = self.geo.wing_tip_chord / self.geo.wing_root_chord
         tan_sweep_le_wing = math.tan(math.radians(self.geo.wing_sweep_le))
         tan_sweep_half_wing = tan_sweep_le_wing - (
-            2 * self.geo.wing_root_chord * (1 - taper_wing)
+            2
+            * self.geo.wing_root_chord
+            * (1 - taper_wing)
             / (self.geo.wing_span * (1 + taper_wing))
         )
 
         taper_canard = self.geo.canard_tip_chord / self.geo.canard_root_chord
         tan_sweep_le_canard = math.tan(math.radians(self.geo.canard_sweep_le))
         tan_sweep_half_canard = tan_sweep_le_canard - (
-            2 * self.geo.canard_root_chord * (1 - taper_canard)
+            2
+            * self.geo.canard_root_chord
+            * (1 - taper_canard)
             / (self.geo.canard_span * (1 + taper_canard))
         )
 
@@ -288,12 +326,19 @@ class PhysicsEngine:
 
         # Lift curve slopes (per radian) with sweep correction
         a_wing = (
-            2 * math.pi * ar_wing
+            2
+            * math.pi
+            * ar_wing
             / (2 + math.sqrt(4 + ar_wing**2 * (1 + tan_sweep_half_wing**2 / beta_sq)))
         )
         a_canard = (
-            2 * math.pi * ar_canard
-            / (2 + math.sqrt(4 + ar_canard**2 * (1 + tan_sweep_half_canard**2 / beta_sq)))
+            2
+            * math.pi
+            * ar_canard
+            / (
+                2
+                + math.sqrt(4 + ar_canard**2 * (1 + tan_sweep_half_canard**2 / beta_sq))
+            )
         )
 
         # Canard downwash on wing with vertical separation (Phillips, Ch. 9)
@@ -374,8 +419,11 @@ class PhysicsEngine:
         cg_aft = np_loc - 0.05 * mac
 
         # Build empty-weight snapshot (excludes pilot and fuel)
-        empty_items = [i for i in self._weight_balance.items
-                       if i.category not in ("payload", "fuel")]
+        empty_items = [
+            i
+            for i in self._weight_balance.items
+            if i.category not in ("payload", "fuel")
+        ]
         empty_weight = sum(i.weight for i in empty_items)
         empty_moment = sum(i.moment for i in empty_items)
 
@@ -385,9 +433,15 @@ class PhysicsEngine:
 
         scenarios = {
             "light_pilot_min_fuel": (fc.pilot_weight_min_lb, fc.fuel_reserve_gal),
-            "heavy_pilot_max_fuel": (fc.pilot_weight_max_lb, config.propulsion.fuel_capacity_gal),
+            "heavy_pilot_max_fuel": (
+                fc.pilot_weight_max_lb,
+                config.propulsion.fuel_capacity_gal,
+            ),
             "heavy_pilot_min_fuel": (fc.pilot_weight_max_lb, fc.fuel_reserve_gal),
-            "light_pilot_max_fuel": (fc.pilot_weight_min_lb, config.propulsion.fuel_capacity_gal),
+            "light_pilot_max_fuel": (
+                fc.pilot_weight_min_lb,
+                config.propulsion.fuel_capacity_gal,
+            ),
         }
 
         results = {}
@@ -422,8 +476,9 @@ class PhysicsEngine:
         return self._weight_balance
 
     @staticmethod
-    def calculate_reynolds(velocity_kts: float = 160.0, chord_in: float = 50.0,
-                           altitude_ft: float = 8000.0) -> float:
+    def calculate_reynolds(
+        velocity_kts: float = 160.0, chord_in: float = 50.0, altitude_ft: float = 8000.0
+    ) -> float:
         """Calculate Reynolds number at given flight conditions.
 
         Re = rho * V * c / mu
@@ -487,23 +542,31 @@ class PhysicsEngine:
         taper_wing = self.geo.wing_tip_chord / self.geo.wing_root_chord
         tan_le_wing = math.tan(math.radians(self.geo.wing_sweep_le))
         tan_half_wing = tan_le_wing - (
-            2 * self.geo.wing_root_chord * (1 - taper_wing)
+            2
+            * self.geo.wing_root_chord
+            * (1 - taper_wing)
             / (self.geo.wing_span * (1 + taper_wing))
         )
 
         taper_canard = self.geo.canard_tip_chord / self.geo.canard_root_chord
         tan_le_canard = math.tan(math.radians(self.geo.canard_sweep_le))
         tan_half_canard = tan_le_canard - (
-            2 * self.geo.canard_root_chord * (1 - taper_canard)
+            2
+            * self.geo.canard_root_chord
+            * (1 - taper_canard)
             / (self.geo.canard_span * (1 + taper_canard))
         )
 
         a_wing = (
-            2 * math.pi * ar_wing
+            2
+            * math.pi
+            * ar_wing
             / (2 + math.sqrt(4 + ar_wing**2 * (1 + tan_half_wing**2)))
         )
         a_canard = (
-            2 * math.pi * ar_canard
+            2
+            * math.pi
+            * ar_canard
             / (2 + math.sqrt(4 + ar_canard**2 * (1 + tan_half_canard**2)))
         )
 
@@ -516,8 +579,10 @@ class PhysicsEngine:
 
         # Representative chords: use MAC
         mac_canard = (
-            (2 / 3) * self.geo.canard_root_chord
-            * (1 + taper_canard + taper_canard**2) / (1 + taper_canard)
+            (2 / 3)
+            * self.geo.canard_root_chord
+            * (1 + taper_canard + taper_canard**2)
+            / (1 + taper_canard)
         )
         mac_wing, _ = self.calculate_mac()
         chord_canard_ft = mac_canard / 12.0
@@ -1058,8 +1123,13 @@ class OpenVSPRunner:
             vsp.SetParmVal(winglet_id, "Root_Chord", "XSec_1", geom.winglet_root_chord)
             vsp.SetParmVal(winglet_id, "Tip_Chord", "XSec_1", geom.winglet_tip_chord)
             vsp.SetParmVal(winglet_id, "Dihedral", "XSec_1", 90.0)
-            vsp.SetParmVal(winglet_id, "X_Rel_Location", "XForm",
-                           geom.wing_le_fs + geom.wing_span / 2 * math.tan(math.radians(geom.wing_sweep_le)))
+            vsp.SetParmVal(
+                winglet_id,
+                "X_Rel_Location",
+                "XForm",
+                geom.wing_le_fs
+                + geom.wing_span / 2 * math.tan(math.radians(geom.wing_sweep_le)),
+            )
             vsp.SetParmVal(winglet_id, "Y_Rel_Location", "XForm", geom.wing_span / 2)
 
             rudder_id = vsp.AddSubSurf(winglet_id, vsp.SS_CONTROL)
@@ -1110,8 +1180,16 @@ class OpenVSPRunner:
                 },
             },
             "control_surfaces": {
-                "elevon": {"span_fraction": [0.30, 1.0], "chord_fraction": 0.25, "max_deflection_deg": 20.0},
-                "rudder": {"span_fraction": [0.0, 1.0], "chord_fraction": 0.30, "max_deflection_deg": 25.0},
+                "elevon": {
+                    "span_fraction": [0.30, 1.0],
+                    "chord_fraction": 0.25,
+                    "max_deflection_deg": 20.0,
+                },
+                "rudder": {
+                    "span_fraction": [0.0, 1.0],
+                    "chord_fraction": 0.30,
+                    "max_deflection_deg": 25.0,
+                },
             },
         }
         json_path = output_path.with_suffix(".vsp3.json")

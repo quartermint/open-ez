@@ -29,9 +29,16 @@ def _make_naca_0012_coords(n=100):
     x = 0.5 * (1 - np.cos(t))  # Cosine spacing: 0 -> 1
 
     # NACA 0012 thickness distribution
-    yt = 0.12 / 0.2 * (
-        0.2969 * np.sqrt(x) - 0.1260 * x - 0.3516 * x**2
-        + 0.2843 * x**3 - 0.1015 * x**4
+    yt = (
+        0.12
+        / 0.2
+        * (
+            0.2969 * np.sqrt(x)
+            - 0.1260 * x
+            - 0.3516 * x**2
+            + 0.2843 * x**3
+            - 0.1015 * x**4
+        )
     )
 
     return AirfoilCoordinates(
@@ -44,7 +51,6 @@ def _make_naca_0012_coords(n=100):
 
 
 class TestSkinDeduction:
-
     def test_offset_reduces_thickness(self):
         """Offset airfoil should be thinner than original at mid-chord."""
         coords = _make_naca_0012_coords()
@@ -59,11 +65,11 @@ class TestSkinDeduction:
 
         # Find midchord thickness for original
         le_orig = np.argmin(x_orig)
-        upper_orig = y_orig[:le_orig + 1]
+        upper_orig = y_orig[: le_orig + 1]
         lower_orig = y_orig[le_orig:]
 
         le_off = np.argmin(x_off)
-        upper_off = y_off[:le_off + 1]
+        upper_off = y_off[: le_off + 1]
         lower_off = y_off[le_off:]
 
         # Max thickness of original should be greater than offset
@@ -89,17 +95,17 @@ class TestSkinDeduction:
         # At mid-chord, normals are nearly vertical, so thickness reduction
         # should be close to 2 * skin_normalized = 2 * 0.048/50 = 0.00192
         le_orig = np.argmin(x_orig)
-        thick_orig = np.max(y_orig[:le_orig + 1]) - np.min(y_orig[le_orig:])
+        thick_orig = np.max(y_orig[: le_orig + 1]) - np.min(y_orig[le_orig:])
 
         le_off = np.argmin(x_off)
-        thick_off = np.max(y_off[:le_off + 1]) - np.min(y_off[le_off:])
+        thick_off = np.max(y_off[: le_off + 1]) - np.min(y_off[le_off:])
 
         reduction = thick_orig - thick_off
         expected = 2 * skin / chord
         # Reduction should be positive and on the right order of magnitude.
         # Exact match isn't expected because: (1) normals aren't purely vertical,
         # (2) max thickness point shifts after offset, (3) spline resampling.
-        assert reduction > 0, f"No thickness reduction detected"
+        assert reduction > 0, "No thickness reduction detected"
         assert reduction < expected * 3, (
             f"Reduction {reduction:.5f} too large vs expected {expected:.5f}"
         )
@@ -128,14 +134,13 @@ class TestSkinDeduction:
         # Should be very similar (not exact due to normal computation at boundaries)
         le_orig = np.argmin(x_orig)
         le_off = np.argmin(x_off)
-        thick_orig = np.max(y_orig[:le_orig + 1]) - np.min(y_orig[le_orig:])
-        thick_off = np.max(y_off[:le_off + 1]) - np.min(y_off[le_off:])
+        thick_orig = np.max(y_orig[: le_orig + 1]) - np.min(y_orig[le_orig:])
+        thick_off = np.max(y_off[: le_off + 1]) - np.min(y_off[le_off:])
 
         assert abs(thick_orig - thick_off) < 0.001
 
 
 class TestTECollapseProtection:
-
     def test_large_offset_doesnt_crash(self):
         """Very large offset on thin airfoil should not raise exceptions."""
         coords = _make_naca_0012_coords()
@@ -160,6 +165,6 @@ class TestTECollapseProtection:
         assert len(x) > 20
         le = np.argmin(x)
         if le > 0 and le < len(y) - 1:
-            upper_max = np.max(y[:le + 1])
+            upper_max = np.max(y[: le + 1])
             lower_min = np.min(y[le:])
             assert upper_max > lower_min, "Upper and lower surfaces crossed"

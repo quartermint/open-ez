@@ -129,9 +129,23 @@ class GeometricParams:
     # === DERIVED DIMENSIONS (computed at runtime) ===
     @property
     def canard_arm(self) -> float:
-        """Distance from wing AC to canard AC (critical for stability)."""
-        wing_ac = self.fs_wing_le + (self.wing_root_chord * 0.25)
-        canard_ac = self.fs_canard_le + (self.canard_root_chord * 0.25)
+        """Distance from wing AC to canard AC (critical for stability).
+
+        Uses MAC-based quarter chord with sweep offset for both surfaces.
+        """
+        import math
+        # Wing AC: MAC quarter-chord with sweep offset
+        taper_w = self.wing_tip_chord / self.wing_root_chord
+        mac_w = (2 / 3) * self.wing_root_chord * (1 + taper_w + taper_w**2) / (1 + taper_w)
+        y_mac_w = (self.wing_span / 2 / 3) * (1 + 2 * taper_w) / (1 + taper_w)
+        wing_ac = self.fs_wing_le + y_mac_w * math.tan(math.radians(self.wing_sweep_le)) + 0.25 * mac_w
+
+        # Canard AC: MAC quarter-chord with sweep offset
+        taper_c = self.canard_tip_chord / self.canard_root_chord
+        mac_c = (2 / 3) * self.canard_root_chord * (1 + taper_c + taper_c**2) / (1 + taper_c)
+        y_mac_c = (self.canard_span / 2 / 3) * (1 + 2 * taper_c) / (1 + taper_c)
+        canard_ac = self.fs_canard_le + y_mac_c * math.tan(math.radians(self.canard_sweep_le)) + 0.25 * mac_c
+
         return wing_ac - canard_ac
 
     @property

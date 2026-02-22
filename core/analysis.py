@@ -12,7 +12,7 @@ Key Metrics:
 """
 
 from dataclasses import dataclass, field, asdict
-from datetime import datetime
+from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any, Dict, List, Optional, Tuple, Union
 import json
@@ -245,13 +245,18 @@ class PhysicsEngine:
         mac_wing, x_mac_le_wing = self.calculate_mac()
         ac_wing = x_mac_le_wing + 0.25 * mac_wing
 
-        # Canard AC at 25% MAC (not root chord -- 2C fix)
+        # Canard AC at 25% MAC with sweep offset (matching wing pattern)
         canard_taper = self.geo.canard_tip_chord / self.geo.canard_root_chord
         mac_canard = (
             (2 / 3) * self.geo.canard_root_chord
             * (1 + canard_taper + canard_taper**2) / (1 + canard_taper)
         )
-        ac_canard = self.geo.fs_canard_le + 0.25 * mac_canard
+        canard_semi_span = self.geo.canard_span / 2
+        y_mac_canard = (canard_semi_span / 3) * (1 + 2 * canard_taper) / (1 + canard_taper)
+        x_mac_le_canard = self.geo.fs_canard_le + y_mac_canard * math.tan(
+            math.radians(self.geo.canard_sweep_le)
+        )
+        ac_canard = x_mac_le_canard + 0.25 * mac_canard
 
         # Lift Curve Slopes using lifting line theory with sweep correction
         # Anderson eq. 5.69:
@@ -1139,7 +1144,7 @@ class OpenVSPRunner:
     ) -> None:
         payload = {
             "metadata": {
-                "timestamp": datetime.utcnow().isoformat() + "Z",
+                "timestamp": datetime.now(timezone.utc).isoformat(),
                 "config_version": config.version,
                 "baseline": config.baseline,
             },

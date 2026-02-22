@@ -256,17 +256,19 @@ class GCodeWriter:
 
         # === Curvature-based feed rate modulation ===
         # At high-curvature points (LE/TE), reduce feed to prevent wire drag.
-        # Curvature measured as turning angle between consecutive segments.
+        # Use max turning angle across root and tip to apply penalty once per
+        # segment, preventing double-stacking that could drop to 0.36x.
         for i in range(1, len(root_segments)):
-            for segments in (root_segments, tip_segments):
-                if i < len(segments):
-                    v1 = pts_root[i] - pts_root[i - 1] if segments is root_segments else pts_tip[i] - pts_tip[i - 1]
-                    v2 = pts_root[i + 1] - pts_root[i] if segments is root_segments and i + 1 < n_points else pts_tip[i + 1] - pts_tip[i] if i + 1 < n_points else v1
+            max_angle = 0.0
+            for pts, segments in [(pts_root, root_segments), (pts_tip, tip_segments)]:
+                if i < len(segments) and i + 1 < n_points:
+                    v1 = pts[i] - pts[i - 1]
+                    v2 = pts[i + 1] - pts[i]
                     cross = v1[0] * v2[1] - v1[1] * v2[0]
                     dot = np.dot(v1, v2)
-                    angle = abs(np.arctan2(cross, dot))
-                    if angle > 0.5:  # > ~29 deg turning angle
-                        feed_rates[i - 1] *= 0.6  # 40% slowdown at LE
+                    max_angle = max(max_angle, abs(np.arctan2(cross, dot)))
+            if max_angle > 0.5:  # > ~29 deg turning angle
+                feed_rates[i - 1] *= 0.6  # 40% slowdown at LE (applied once)
 
         # === Velocity ratio clamping ===
         # Prevent root/tip speed differential exceeding 2.5:1

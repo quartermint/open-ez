@@ -614,7 +614,7 @@ def build_wing_torsion_section(chord_in: float) -> TorsionSection:
         (d_box_depth, skin_t * 2),    # Front spar web (inner + outer skin)
         (d_box_chord, skin_t),         # Upper skin
         (d_box_chord, skin_t),         # Lower skin
-        (d_box_depth, spar_cap_w),     # Aft closure (spar cap)
+        (d_box_depth, spar_height),     # Aft closure (spar cap laminate)
     ]
 
     return TorsionSection(
@@ -686,6 +686,10 @@ class FlutterEstimator:
 
     def flutter_speed_ktas(self) -> float:
         """Estimated flutter speed using simplified Theodorsen approach.
+
+        WARNING: This is a preliminary heuristic that does not account for
+        mass balancing, elastic axis offset, or altitude density effects.
+        It does not replace a formal V-g flutter analysis (e.g. via VSPAERO).
 
         For frequency ratio > 1.5, flutter-free below:
         V_f_approx = omega_theta * b / pi  (in ft/s, then convert to KTAS)

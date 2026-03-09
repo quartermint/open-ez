@@ -60,13 +60,13 @@ Despite the SSOT principle, some values are hardcoded:
 - `core/simulation/fea_adapter.py`: Beam modulus 2.8e6 psi hardcoded in `BeamFEAAdapter.__init__()`
 - **Fix**: Move to config or at minimum document as "reference values" with source citations
 
-### 10. No `.gitignore` for Output Directory
-- The `output/` directory contains generated JSON, metadata, and prototype packages that appear to be committed
-- **Fix**: Add `output/` to `.gitignore` (or add explicit exceptions for reference data)
+### 10. ~~No `.gitignore` for Output Directory~~ -- RESOLVED
+- ~~The `output/` directory contains generated JSON, metadata, and prototype packages that appear to be committed~~
+- **Resolution**: Added `output/` catch-all entry to `.gitignore` (in addition to existing subdirectory entries for `output/STEP/`, `output/STL/`, `output/DXF/`, `output/GCODE/`, `output/VSP/`). All generated artifacts are now excluded from version control.
 
-### 11. `.mypy_cache` Committed
-- The `.mypy_cache/` directory is in the repo tree (visible in file listing)
-- **Fix**: Add `.mypy_cache/` to `.gitignore`
+### 11. ~~`.mypy_cache` Committed~~ -- RESOLVED
+- ~~The `.mypy_cache/` directory is in the repo tree (visible in file listing)~~
+- **Resolution**: Added `.mypy_cache/` to `.gitignore` alongside existing `.pytest_cache/` entry. Both cache directories are now excluded from version control.
 
 ## Testing Gaps
 
@@ -91,6 +91,6 @@ Untested modules: `core/nesting.py`, `core/assembly.py`, `core/systems.py`, `cor
 
 ## Documentation Concerns
 
-### 16. Stale Planning Documents
-- `implementation_plan.md`, `sprint_backlog.md`, `swarm_strategy.md`, `agents.md` may be outdated relative to actual code state
-- No mechanism to keep planning docs synchronized with implementation
+### 16. ~~Stale Planning Documents~~ -- RESOLVED
+- ~~`implementation_plan.md`, `sprint_backlog.md`, `swarm_strategy.md`, `agents.md` may be outdated relative to actual code state~~
+- **Resolution**: All planning documents refreshed (March 2026). `implementation_plan.md` and `sprint_backlog.md` updated to reflect completed state with references to actual code modules. `swarm_strategy.md` and `agents.md` marked as archived historical documents (superseded by GSD framework). `REVIEW_PROMPT.md` marked as archived post-review. `CLAUDE.md` current state section verified accurate.

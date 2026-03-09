@@ -70,15 +70,15 @@ rutan-ez/
 |-- mypy.ini                        # Type checking config
 |-- requirements.txt                # Production dependencies
 |-- requirements-dev.txt            # Dev dependencies
-|-- CLAUDE.md                       # AI assistant instructions
+|-- CLAUDE.md                       # AI assistant instructions (active)
 |-- README.md                       # Project README
-|-- REVIEW_PROMPT.md                # Code review prompt template
-|-- agents.md                       # AI agent configuration
-|-- idea.md                         # Original project idea
-|-- implementation_plan.md          # Implementation roadmap
-|-- sprint_backlog.md               # Sprint tracking
-|-- swarm_strategy.md               # Multi-agent strategy
-|-- vision.md                       # Project vision document
+|-- REVIEW_PROMPT.md                # Code review prompt (archived -- Feb 2026 review)
+|-- agents.md                       # Swarm personas (archived -- superseded by GSD)
+|-- idea.md                         # Original project idea/genesis document (historical)
+|-- implementation_plan.md          # Implementation roadmap (completed -- all 5 phases done)
+|-- sprint_backlog.md               # Sprint tracking (completed -- all sprints done)
+|-- swarm_strategy.md               # Multi-agent strategy (archived -- superseded by GSD)
+|-- vision.md                       # Project vision document (historical)
 |-- LICENSE                         # License file
 ```
 

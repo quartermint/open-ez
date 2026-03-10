@@ -33,12 +33,17 @@ Key deliverables: 22 validation tests, 7 physics fixes, structural analysis suit
 **Goal**: Published Long-EZ reference data is curated with source citations and the 51" FS datum offset is resolved so computed NP/CG values translate correctly to published values
 **Depends on**: Nothing (first phase)
 **Requirements**: BUG-01, REF-01, REF-02, REF-03
+**Plans:** 2 plans
+
+Plans:
+- [ ] 01-01-PLAN.md — Create reference_data.json with provenance schema and add datum offset to GeometricParams
+- [ ] 01-02-PLAN.md — Wire dual FS display into StabilityMetrics and lock with validation tests
+
 **Success Criteria** (what must be TRUE):
   1. `reference_data.json` exists with published Long-EZ specs from RAF CP-29/CP-31 and wind tunnel data for both airfoils, each entry citing its source
   2. `config` exposes a `datum_offset_in` field and a `to_published_datum()` method that converts computed FS values to the published coordinate system
   3. Computed NP at FS 153.5 (internal) translates to ~FS 102-114 (published) via `to_published_datum()`, matching the ~51" known offset
   4. Community build data (CSA newsletters, builder forums, type club weigh-ins) is captured in reference data with provenance noted
-**Plans**: TBD
 
 ### Phase 2: D-Box Structural Model
 **Goal**: Spar model upgraded from cap-only I-beam to D-box composite section, producing realistic tip deflection values for the Long-EZ wing under design loads
@@ -102,7 +107,7 @@ Phases 1, 2, 3 can execute in parallel. Phase 4 depends on all three. Phase 5 de
 
 | Phase | Milestone | Plans Complete | Status | Completed |
 |-------|-----------|----------------|--------|-----------|
-| 1. Reference Data & Datum Resolution | v1.1 | 0/TBD | Not started | - |
+| 1. Reference Data & Datum Resolution | v1.1 | 0/2 | Planning complete | - |
 | 2. D-Box Structural Model | v1.1 | 0/TBD | Not started | - |
 | 3. OpenVSP Native Integration | v1.1 | 0/TBD | Not started | - |
 | 4. Validation Test Infrastructure | v1.1 | 0/TBD | Not started | - |

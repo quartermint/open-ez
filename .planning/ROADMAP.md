@@ -36,8 +36,8 @@ Key deliverables: 22 validation tests, 7 physics fixes, structural analysis suit
 **Plans:** 2/2 plans complete
 
 Plans:
-- [ ] 01-01-PLAN.md — Create reference_data.json with provenance schema and add datum offset to GeometricParams
-- [ ] 01-02-PLAN.md — Wire dual FS display into StabilityMetrics and lock with validation tests
+- [x] 01-01-PLAN.md — Create reference_data.json with provenance schema and add datum offset to GeometricParams
+- [x] 01-02-PLAN.md — Wire dual FS display into StabilityMetrics and lock with validation tests
 
 **Success Criteria** (what must be TRUE):
   1. `reference_data.json` exists with published Long-EZ specs from RAF CP-29/CP-31 and wind tunnel data for both airfoils, each entry citing its source
@@ -49,12 +49,17 @@ Plans:
 **Goal**: Spar model upgraded from cap-only I-beam to D-box composite section, producing realistic tip deflection values for the Long-EZ wing under design loads
 **Depends on**: Nothing (parallel to Phase 1)
 **Requirements**: BUG-03, VAL-03
+**Plans:** 2 plans
+
+Plans:
+- [ ] 02-01-PLAN.md — D-box section model, config parameterization, spanwise EI, numerical deflection integration
+- [ ] 02-02-PLAN.md — Wire D-box into nominal_spar_check, failure checks, FlutterEstimator integration, validation tests
+
 **Success Criteria** (what must be TRUE):
   1. `BeamFEAAdapter` (or equivalent D-box model) computes tip deflection of 5-15" under 450 lbf load, replacing the physically absurd 89,169" cap-only result
   2. D-box section properties (skin contribution, shear web) are parameterized from `aircraft_config.py` (ply counts, chord fraction, laminate schedule)
   3. Validation test `test_beam_deflection.py` passes with D-box model and deflection within expected composite behavior range
   4. Shear stress and Tsai-Wu failure checks continue to pass with updated section geometry
-**Plans**: TBD
 
 ### Phase 3: OpenVSP Native Integration
 **Goal**: Real OpenVSP Python bindings are installed and working, `_run_native_sweep()` builds Long-EZ geometry and runs VSPAERO VLM to produce real CL/CD/CM polars, and the pipeline uses real VSP with CI-safe surrogate fallback
@@ -108,7 +113,7 @@ Phases 1, 2, 3 can execute in parallel. Phase 4 depends on all three. Phase 5 de
 | Phase | Milestone | Plans Complete | Status | Completed |
 |-------|-----------|----------------|--------|-----------|
 | 1. Reference Data & Datum Resolution | 2/2 | Complete   | 2026-03-10 | - |
-| 2. D-Box Structural Model | v1.1 | 0/TBD | Not started | - |
+| 2. D-Box Structural Model | v1.1 | 0/2 | Planning complete | - |
 | 3. OpenVSP Native Integration | v1.1 | 0/TBD | Not started | - |
 | 4. Validation Test Infrastructure | v1.1 | 0/TBD | Not started | - |
 | 5. Calibration & Accuracy Report | v1.1 | 0/TBD | Not started | - |

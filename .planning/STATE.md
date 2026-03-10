@@ -3,14 +3,14 @@ gsd_state_version: 1.0
 milestone: v1.1
 milestone_name: Physical Validation & Calibration
 status: planning
-stopped_at: Phase 1 context gathered
-last_updated: "2026-03-10T04:45:01.205Z"
+stopped_at: Completed 01-01-PLAN.md
+last_updated: "2026-03-10T04:58:51.587Z"
 last_activity: 2026-03-09 — Roadmap created for v1.1
 progress:
   total_phases: 6
   completed_phases: 0
-  total_plans: 0
-  completed_plans: 0
+  total_plans: 2
+  completed_plans: 1
   percent: 0
 ---
 
@@ -46,6 +46,7 @@ Progress: [░░░░░░░░░░] 0%
 | - | - | - | - |
 
 *Updated after each plan completion*
+| Phase 01 P01 | 3m | 2 tasks | 2 files |
 
 ## Accumulated Context
 
@@ -57,6 +58,9 @@ Key pending decisions for v1.1:
 - [Pending]: Datum offset as additive translation constant `datum_offset_in` — not a geometry change
 - [Pending]: D-box composite model replaces cap-only I-beam in `fea_adapter.py`
 - [Pending]: Surrogate fallback for CI when OpenVSP not installed
+- [Phase 01-01]: datum_offset_in = 45.5 in (exact, from NP comparison: internal 153.5 - published 108.0); the previously estimated 51" was imprecise
+- [Phase 01-01]: reference_data.json uses published Long-EZ FS datum exclusively; code uses to_published_datum() for conversion
+- [Phase 01-01]: AR discrepancy (7.3 published vs 6.34 computed) is reference area convention difference, documented in reference_data.json notes
 
 ### Blockers/Concerns
 
@@ -74,6 +78,6 @@ Key pending decisions for v1.1:
 
 ## Session Continuity
 
-Last session: 2026-03-10T04:45:01.202Z
-Stopped at: Phase 1 context gathered
-Resume file: .planning/phases/01-reference-data-datum-resolution/01-CONTEXT.md
+Last session: 2026-03-10T04:58:51.576Z
+Stopped at: Completed 01-01-PLAN.md
+Resume file: None

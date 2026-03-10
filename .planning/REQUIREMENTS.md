@@ -9,14 +9,14 @@ Requirements for Physical Validation & Calibration milestone. Each maps to roadm
 
 ### Bug Fixes
 
-- [ ] **BUG-01**: FS datum offset (~51") resolved so computed NP/CG translate correctly to published Long-EZ values via `datum_offset_in` config field and `to_published_datum()` method
+- [x] **BUG-01**: FS datum offset (~51") resolved so computed NP/CG translate correctly to published Long-EZ values via `datum_offset_in` config field and `to_published_datum()` method
 - [ ] **BUG-03**: Spar model upgraded from cap-only I-beam to D-box composite section producing realistic deflection values (5-15" under 450 lbf, not 89,169")
 
 ### Reference Data
 
-- [ ] **REF-01**: Published Rutan Long-EZ specifications curated from RAF CP-29/CP-31 and plans chapters with source citations in `reference_data.json`
-- [ ] **REF-02**: NACA/NASA wind tunnel data collected for Roncz R1145MS and Eppler 1230 airfoils
-- [ ] **REF-03**: Community build data researched from CSA newsletters, builder forums, and type club weigh-in records
+- [x] **REF-01**: Published Rutan Long-EZ specifications curated from RAF CP-29/CP-31 and plans chapters with source citations in `reference_data.json`
+- [x] **REF-02**: NACA/NASA wind tunnel data collected for Roncz R1145MS and Eppler 1230 airfoils
+- [x] **REF-03**: Community build data researched from CSA newsletters, builder forums, and type club weigh-in records
 
 ### OpenVSP Integration
 
@@ -65,10 +65,10 @@ Which phases cover which requirements. Updated during roadmap creation.
 
 | Requirement | Phase | Status |
 |-------------|-------|--------|
-| BUG-01 | Phase 1 | Pending |
-| REF-01 | Phase 1 | Pending |
-| REF-02 | Phase 1 | Pending |
-| REF-03 | Phase 1 | Pending |
+| BUG-01 | Phase 1 | Complete |
+| REF-01 | Phase 1 | Complete |
+| REF-02 | Phase 1 | Complete |
+| REF-03 | Phase 1 | Complete |
 | BUG-03 | Phase 2 | Pending |
 | VAL-03 | Phase 2 | Pending |
 | VSP-01 | Phase 3 | Pending |

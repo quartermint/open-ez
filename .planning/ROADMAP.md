@@ -33,7 +33,7 @@ Key deliverables: 22 validation tests, 7 physics fixes, structural analysis suit
 **Goal**: Published Long-EZ reference data is curated with source citations and the 51" FS datum offset is resolved so computed NP/CG values translate correctly to published values
 **Depends on**: Nothing (first phase)
 **Requirements**: BUG-01, REF-01, REF-02, REF-03
-**Plans:** 2 plans
+**Plans:** 1/2 plans executed
 
 Plans:
 - [ ] 01-01-PLAN.md — Create reference_data.json with provenance schema and add datum offset to GeometricParams
@@ -107,7 +107,7 @@ Phases 1, 2, 3 can execute in parallel. Phase 4 depends on all three. Phase 5 de
 
 | Phase | Milestone | Plans Complete | Status | Completed |
 |-------|-----------|----------------|--------|-----------|
-| 1. Reference Data & Datum Resolution | v1.1 | 0/2 | Planning complete | - |
+| 1. Reference Data & Datum Resolution | 1/2 | In Progress|  | - |
 | 2. D-Box Structural Model | v1.1 | 0/TBD | Not started | - |
 | 3. OpenVSP Native Integration | v1.1 | 0/TBD | Not started | - |
 | 4. Validation Test Infrastructure | v1.1 | 0/TBD | Not started | - |

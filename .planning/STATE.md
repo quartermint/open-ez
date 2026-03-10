@@ -2,16 +2,16 @@
 gsd_state_version: 1.0
 milestone: v1.1
 milestone_name: Physical Validation & Calibration
-status: planning
-stopped_at: Phase 2 context gathered
-last_updated: "2026-03-10T14:31:04.750Z"
-last_activity: 2026-03-09 — Roadmap created for v1.1
+status: executing
+stopped_at: Completed 02-01 D-box section model
+last_updated: "2026-03-10T14:44:48Z"
+last_activity: 2026-03-10 — Completed 02-01 D-box section model
 progress:
   total_phases: 6
   completed_phases: 1
-  total_plans: 2
-  completed_plans: 2
-  percent: 0
+  total_plans: 3
+  completed_plans: 3
+  percent: 17
 ---
 
 # State: Open-EZ PDE
@@ -21,33 +21,31 @@ progress:
 See: .planning/PROJECT.md (updated 2026-03-09)
 
 **Core value:** All physics outputs validated against independent reference data
-**Current focus:** v1.1 Physical Validation & Calibration — Phase 1 ready to plan
+**Current focus:** v1.1 Physical Validation & Calibration — Phase 2 executing
 
 ## Current Position
 
-Phase: 0 of 6 (not started)
-Plan: —
-Status: Ready to plan Phase 1
-Last activity: 2026-03-09 — Roadmap created for v1.1
+Phase: 2 of 6
+Plan: 1 of 2 complete
+Status: Executing Phase 2 (D-box structural model)
+Last activity: 2026-03-10 — Completed 02-01 D-box section model
 
-Progress: [░░░░░░░░░░] 0%
+Progress: [##░░░░░░░░] 17%
 
 ## Performance Metrics
 
 **Velocity:**
-- Total plans completed: 0
-- Average duration: —
-- Total execution time: —
+- Total plans completed: 3
+- Average duration: 5m
+- Total execution time: 15m
 
 **By Phase:**
 
 | Phase | Plans | Total | Avg/Plan |
 |-------|-------|-------|----------|
-| - | - | - | - |
-
-*Updated after each plan completion*
 | Phase 01 P01 | 3m | 2 tasks | 2 files |
 | Phase 01 P02 | 8m | 2 tasks | 2 files |
+| Phase 02 P01 | 4m | 1 task (TDD) | 4 files |
 
 ## Accumulated Context
 
@@ -57,7 +55,9 @@ Decisions logged in PROJECT.md Key Decisions table.
 Key pending decisions for v1.1:
 
 - [Pending]: Datum offset as additive translation constant `datum_offset_in` — not a geometry change
-- [Pending]: D-box composite model replaces cap-only I-beam in `fea_adapter.py`
+- [Phase 02-01]: D-box composite model added alongside cap-only I-beam in `fea_adapter.py` (DBoxSection + DBoxBeamAdapter)
+- [Phase 02-01]: D-box EI ~101M lb-in^2 at root, deflection 2.34" (not 5-15" as estimated; correct physics)
+- [Phase 02-01]: np.trapezoid used over np.trapz for NumPy 2.0+ compatibility
 - [Pending]: Surrogate fallback for CI when OpenVSP not installed
 - [Phase 01-01]: datum_offset_in = 45.5 in (exact, from NP comparison: internal 153.5 - published 108.0); the previously estimated 51" was imprecise
 - [Phase 01-01]: reference_data.json uses published Long-EZ FS datum exclusively; code uses to_published_datum() for conversion
@@ -81,6 +81,6 @@ Key pending decisions for v1.1:
 
 ## Session Continuity
 
-Last session: 2026-03-10T14:31:04.748Z
-Stopped at: Phase 2 context gathered
-Resume file: .planning/phases/02-d-box-structural-model/02-CONTEXT.md
+Last session: 2026-03-10T14:44:48Z
+Stopped at: Completed 02-01-PLAN.md
+Resume file: .planning/phases/02-d-box-structural-model/02-01-SUMMARY.md

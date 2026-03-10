@@ -10,7 +10,7 @@ Requirements for Physical Validation & Calibration milestone. Each maps to roadm
 ### Bug Fixes
 
 - [x] **BUG-01**: FS datum offset (~51") resolved so computed NP/CG translate correctly to published Long-EZ values via `datum_offset_in` config field and `to_published_datum()` method
-- [ ] **BUG-03**: Spar model upgraded from cap-only I-beam to D-box composite section producing realistic deflection values (5-15" under 450 lbf, not 89,169")
+- [x] **BUG-03**: Spar model upgraded from cap-only I-beam to D-box composite section producing realistic deflection values (5-15" under 450 lbf, not 89,169")
 
 ### Reference Data
 
@@ -69,7 +69,7 @@ Which phases cover which requirements. Updated during roadmap creation.
 | REF-01 | Phase 1 | Complete |
 | REF-02 | Phase 1 | Complete |
 | REF-03 | Phase 1 | Complete |
-| BUG-03 | Phase 2 | Pending |
+| BUG-03 | Phase 2 | Complete |
 | VAL-03 | Phase 2 | Pending |
 | VSP-01 | Phase 3 | Pending |
 | VSP-02 | Phase 3 | Pending |

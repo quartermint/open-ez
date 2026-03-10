@@ -20,7 +20,7 @@ Key deliverables: 22 validation tests, 7 physics fixes, structural analysis suit
 
 **Milestone Goal:** Close the self-referential baseline gap — install real OpenVSP, validate and calibrate all outputs against published data and real VSPAERO, then lock validated values with regression tests.
 
-- [ ] **Phase 1: Reference Data & Datum Resolution** - Curate external reference dataset and resolve the 51" FS datum offset
+- [x] **Phase 1: Reference Data & Datum Resolution** - Curate external reference dataset and resolve the 51" FS datum offset (completed 2026-03-10)
 - [ ] **Phase 2: D-Box Structural Model** - Replace cap-only beam model with D-box composite section
 - [ ] **Phase 3: OpenVSP Native Integration** - Install real OpenVSP, implement native VSPAERO sweep, wire into pipeline
 - [ ] **Phase 4: Validation Test Infrastructure** - Precision validation tests comparing outputs to curated reference data and real VSPAERO
@@ -33,7 +33,7 @@ Key deliverables: 22 validation tests, 7 physics fixes, structural analysis suit
 **Goal**: Published Long-EZ reference data is curated with source citations and the 51" FS datum offset is resolved so computed NP/CG values translate correctly to published values
 **Depends on**: Nothing (first phase)
 **Requirements**: BUG-01, REF-01, REF-02, REF-03
-**Plans:** 1/2 plans executed
+**Plans:** 2/2 plans complete
 
 Plans:
 - [ ] 01-01-PLAN.md — Create reference_data.json with provenance schema and add datum offset to GeometricParams
@@ -107,7 +107,7 @@ Phases 1, 2, 3 can execute in parallel. Phase 4 depends on all three. Phase 5 de
 
 | Phase | Milestone | Plans Complete | Status | Completed |
 |-------|-----------|----------------|--------|-----------|
-| 1. Reference Data & Datum Resolution | 1/2 | In Progress|  | - |
+| 1. Reference Data & Datum Resolution | 2/2 | Complete   | 2026-03-10 | - |
 | 2. D-Box Structural Model | v1.1 | 0/TBD | Not started | - |
 | 3. OpenVSP Native Integration | v1.1 | 0/TBD | Not started | - |
 | 4. Validation Test Infrastructure | v1.1 | 0/TBD | Not started | - |

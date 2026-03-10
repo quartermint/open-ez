@@ -65,12 +65,17 @@ Plans:
 **Goal**: Real OpenVSP Python bindings are installed and working, `_run_native_sweep()` builds Long-EZ geometry and runs VSPAERO VLM to produce real CL/CD/CM polars, and the pipeline uses real VSP with CI-safe surrogate fallback
 **Depends on**: Nothing (parallel to Phases 1 and 2)
 **Requirements**: VSP-01, VSP-02, VSP-04
+**Plans:** 2 plans
+
+Plans:
+- [ ] 03-01-PLAN.md — Add VSP geometry params to config, create install script, user installs OpenVSP
+- [ ] 03-02-PLAN.md — Implement native VSPAERO sweep, wire into pipeline, CI surrogate fallback tests
+
 **Success Criteria** (what must be TRUE):
   1. `import openvsp` succeeds on MacBook without error and the installed version is confirmed in a requirements file or install script
   2. `_run_native_sweep()` in `vsp_integration.py` returns a polar dict with CL, CD, CM values across the configured alpha sweep (not "FIXME" or placeholder data)
   3. `python main.py --generate-all` invokes real VSPAERO when `openvsp` is importable, and automatically falls back to `OpenVSPAdapter` surrogate when it is not
   4. The surrogate fallback path is tested in CI without OpenVSP installed and all existing tests continue to pass
-**Plans**: TBD
 
 ### Phase 4: Validation Test Infrastructure & Cross-Validation
 **Goal**: Precision validation tests compare all major physics outputs against curated reference data (Phase 1) and real VSPAERO polars (Phase 3), and the surrogate is cross-validated against real VSP with discrepancies documented
@@ -114,7 +119,7 @@ Phases 1, 2, 3 can execute in parallel. Phase 4 depends on all three. Phase 5 de
 |-------|-----------|----------------|--------|-----------|
 | 1. Reference Data & Datum Resolution | 2/2 | Complete   | 2026-03-10 | - |
 | 2. D-Box Structural Model | v1.1 | 0/2 | Planning complete | - |
-| 3. OpenVSP Native Integration | v1.1 | 0/TBD | Not started | - |
+| 3. OpenVSP Native Integration | v1.1 | 0/2 | Planning complete | - |
 | 4. Validation Test Infrastructure | v1.1 | 0/TBD | Not started | - |
 | 5. Calibration & Accuracy Report | v1.1 | 0/TBD | Not started | - |
 | 6. Regression Lock-In | v1.1 | 0/TBD | Not started | - |

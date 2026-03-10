@@ -3,14 +3,14 @@ gsd_state_version: 1.0
 milestone: v1.1
 milestone_name: Physical Validation & Calibration
 status: completed
-stopped_at: Completed 03-02-PLAN.md — native VSPAERO sweep + CI surrogate fallback
-last_updated: "2026-03-10T15:48:45.400Z"
+stopped_at: Completed 03-04-PLAN.md — deferred CadQuery imports in main.py
+last_updated: "2026-03-10T19:50:19.413Z"
 last_activity: 2026-03-10 — Completed 02-02 D-box pipeline integration
 progress:
   total_phases: 6
   completed_phases: 3
-  total_plans: 6
-  completed_plans: 6
+  total_plans: 7
+  completed_plans: 7
   percent: 33
 ---
 
@@ -50,6 +50,7 @@ Progress: [###░░░░░░░] 33%
 | Phase 03 P01 | 5m | 1 tasks | 3 files |
 | Phase 03-openvsp-native-integration P01 | 25 | 2 tasks | 3 files |
 | Phase 03-openvsp-native-integration P02 | 8 | 2 tasks | 3 files |
+| Phase 03-openvsp-native-integration P04 | 2 | 1 tasks | 2 files |
 
 ## Accumulated Context
 
@@ -77,6 +78,7 @@ Key pending decisions for v1.1:
 - [Phase 03-openvsp-native-integration]: OpenVSP 3.48.2 pip install from macOS ARM64 app bundle (only distribution); Python 3.13 required for .so bindings
 - [Phase 03-openvsp-native-integration]: wing_le_fs and canard_le_fs as @property aliases to fs_wing_le/fs_canard_le — no data duplication, SSOT preserved
 - [Phase 03-02]: _run_native_sweep() accepts optional polar_output: Path for test isolation; wing_mac computed inline as (root+tip)/2; is_stable restored to surrogate for backward compat
+- [Phase 03-openvsp-native-integration]: CadQuery imports deferred to function scope in generate_manufacturing(), generate_canard(), generate_wing() — analysis modes work in any Python env
 
 ### Blockers/Concerns
 
@@ -94,6 +96,6 @@ Key pending decisions for v1.1:
 
 ## Session Continuity
 
-Last session: 2026-03-10T15:48:45.399Z
-Stopped at: Completed 03-02-PLAN.md — native VSPAERO sweep + CI surrogate fallback
+Last session: 2026-03-10T19:50:19.410Z
+Stopped at: Completed 03-04-PLAN.md — deferred CadQuery imports in main.py
 Resume file: None

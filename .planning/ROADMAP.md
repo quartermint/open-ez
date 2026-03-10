@@ -65,7 +65,7 @@ Plans:
 **Goal**: Real OpenVSP Python bindings are installed and working, `_run_native_sweep()` builds Long-EZ geometry and runs VSPAERO VLM to produce real CL/CD/CM polars, and the pipeline uses real VSP with CI-safe surrogate fallback
 **Depends on**: Nothing (parallel to Phases 1 and 2)
 **Requirements**: VSP-01, VSP-02, VSP-04
-**Plans:** 2/2 plans complete
+**Plans:** 3/3 plans complete
 
 Plans:
 - [ ] 03-01-PLAN.md — Add VSP geometry params to config, create install script, user installs OpenVSP
@@ -119,7 +119,7 @@ Phases 1, 2, 3 can execute in parallel. Phase 4 depends on all three. Phase 5 de
 |-------|-----------|----------------|--------|-----------|
 | 1. Reference Data & Datum Resolution | 2/2 | Complete   | 2026-03-10 | - |
 | 2. D-Box Structural Model | v1.1 | 0/2 | Planning complete | - |
-| 3. OpenVSP Native Integration | 2/2 | Complete   | 2026-03-10 | - |
+| 3. OpenVSP Native Integration | 3/3 | Complete   | 2026-03-10 | - |
 | 4. Validation Test Infrastructure | v1.1 | 0/TBD | Not started | - |
 | 5. Calibration & Accuracy Report | v1.1 | 0/TBD | Not started | - |
 | 6. Regression Lock-In | v1.1 | 0/TBD | Not started | - |

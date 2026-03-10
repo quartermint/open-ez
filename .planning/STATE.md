@@ -3,14 +3,14 @@ gsd_state_version: 1.0
 milestone: v1.1
 milestone_name: Physical Validation & Calibration
 status: completed
-stopped_at: Phase 3 plans verified
-last_updated: "2026-03-10T15:26:30.018Z"
+stopped_at: "Completed 03-01 Task 1 (VSP geometry params + install script). Task 2 requires user action: run scripts/install_openvsp.sh"
+last_updated: "2026-03-10T15:31:01.478Z"
 last_activity: 2026-03-10 — Completed 02-02 D-box pipeline integration
 progress:
   total_phases: 6
   completed_phases: 2
   total_plans: 6
-  completed_plans: 4
+  completed_plans: 5
   percent: 33
 ---
 
@@ -47,6 +47,7 @@ Progress: [###░░░░░░░] 33%
 | Phase 01 P02 | 8m | 2 tasks | 2 files |
 | Phase 02 P01 | 4m | 1 task (TDD) | 4 files |
 | Phase 02 P02 | 4m | 2 tasks (TDD) | 2 files |
+| Phase 03 P01 | 5m | 1 tasks | 3 files |
 
 ## Accumulated Context
 
@@ -69,6 +70,8 @@ Key pending decisions for v1.1:
 - [Phase 01-01]: AR discrepancy (7.3 published vs 6.34 computed) is reference area convention difference, documented in reference_data.json notes
 - [Phase 01-02]: NP test tolerance set to 8 inches: computed NP 159.29i/113.79p vs reference 108.0 (delta 5.79in); known fs_wing_le datum issue; 8in catches gross errors while accepting geometry uncertainty
 - [Phase 01-02]: Dual FS display format established: 'FS X.XX (internal) / FS Y.YY (published)' for all human-readable FS values in StabilityMetrics.summary()
+- [Phase 03]: wing_le_fs and canard_le_fs as @property aliases to fs_wing_le/fs_canard_le — no data duplication
+- [Phase 03]: OpenVSP install script targets Python 3.13 with .pth in site-packages (macOS ARM64 bundle is only distribution)
 
 ### Blockers/Concerns
 
@@ -86,6 +89,6 @@ Key pending decisions for v1.1:
 
 ## Session Continuity
 
-Last session: 2026-03-10T15:26:30.017Z
-Stopped at: Phase 3 plans verified
-Resume file: .planning/phases/03-openvsp-native-integration/03-02-PLAN.md
+Last session: 2026-03-10T15:31:01.477Z
+Stopped at: Completed 03-01 Task 1 (VSP geometry params + install script). Task 2 requires user action: run scripts/install_openvsp.sh
+Resume file: None

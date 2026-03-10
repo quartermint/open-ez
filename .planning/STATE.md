@@ -1,3 +1,19 @@
+---
+gsd_state_version: 1.0
+milestone: v1.1
+milestone_name: Physical Validation & Calibration
+status: planning
+stopped_at: Phase 1 context gathered
+last_updated: "2026-03-10T04:45:01.205Z"
+last_activity: 2026-03-09 — Roadmap created for v1.1
+progress:
+  total_phases: 6
+  completed_phases: 0
+  total_plans: 0
+  completed_plans: 0
+  percent: 0
+---
+
 # State: Open-EZ PDE
 
 ## Project Reference
@@ -58,6 +74,6 @@ Key pending decisions for v1.1:
 
 ## Session Continuity
 
-Last session: 2026-03-09
-Stopped at: Roadmap written, requirements traceability complete
-Resume file: None
+Last session: 2026-03-10T04:45:01.202Z
+Stopped at: Phase 1 context gathered
+Resume file: .planning/phases/01-reference-data-datum-resolution/01-CONTEXT.md

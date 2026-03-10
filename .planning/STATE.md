@@ -3,8 +3,8 @@ gsd_state_version: 1.0
 milestone: v1.1
 milestone_name: Physical Validation & Calibration
 status: completed
-stopped_at: "Completed 03-01 Task 1 (VSP geometry params + install script). Task 2 requires user action: run scripts/install_openvsp.sh"
-last_updated: "2026-03-10T15:31:01.478Z"
+stopped_at: Completed 03-01-PLAN.md — VSP geometry params + OpenVSP 3.48.2 install verified
+last_updated: "2026-03-10T15:43:49.324Z"
 last_activity: 2026-03-10 — Completed 02-02 D-box pipeline integration
 progress:
   total_phases: 6
@@ -48,6 +48,7 @@ Progress: [###░░░░░░░] 33%
 | Phase 02 P01 | 4m | 1 task (TDD) | 4 files |
 | Phase 02 P02 | 4m | 2 tasks (TDD) | 2 files |
 | Phase 03 P01 | 5m | 1 tasks | 3 files |
+| Phase 03-openvsp-native-integration P01 | 25 | 2 tasks | 3 files |
 
 ## Accumulated Context
 
@@ -72,6 +73,8 @@ Key pending decisions for v1.1:
 - [Phase 01-02]: Dual FS display format established: 'FS X.XX (internal) / FS Y.YY (published)' for all human-readable FS values in StabilityMetrics.summary()
 - [Phase 03]: wing_le_fs and canard_le_fs as @property aliases to fs_wing_le/fs_canard_le — no data duplication
 - [Phase 03]: OpenVSP install script targets Python 3.13 with .pth in site-packages (macOS ARM64 bundle is only distribution)
+- [Phase 03-openvsp-native-integration]: OpenVSP 3.48.2 pip install from macOS ARM64 app bundle (only distribution); Python 3.13 required for .so bindings
+- [Phase 03-openvsp-native-integration]: wing_le_fs and canard_le_fs as @property aliases to fs_wing_le/fs_canard_le — no data duplication, SSOT preserved
 
 ### Blockers/Concerns
 
@@ -89,6 +92,6 @@ Key pending decisions for v1.1:
 
 ## Session Continuity
 
-Last session: 2026-03-10T15:31:01.477Z
-Stopped at: Completed 03-01 Task 1 (VSP geometry params + install script). Task 2 requires user action: run scripts/install_openvsp.sh
+Last session: 2026-03-10T15:43:49.322Z
+Stopped at: Completed 03-01-PLAN.md — VSP geometry params + OpenVSP 3.48.2 install verified
 Resume file: None

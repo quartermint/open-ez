@@ -3,14 +3,14 @@ gsd_state_version: 1.0
 milestone: v1.1
 milestone_name: Physical Validation & Calibration
 status: completed
-stopped_at: Completed 03-01-PLAN.md — VSP geometry params + OpenVSP 3.48.2 install verified
-last_updated: "2026-03-10T15:43:49.324Z"
+stopped_at: Completed 03-02-PLAN.md — native VSPAERO sweep + CI surrogate fallback
+last_updated: "2026-03-10T15:48:45.400Z"
 last_activity: 2026-03-10 — Completed 02-02 D-box pipeline integration
 progress:
   total_phases: 6
-  completed_phases: 2
+  completed_phases: 3
   total_plans: 6
-  completed_plans: 5
+  completed_plans: 6
   percent: 33
 ---
 
@@ -49,6 +49,7 @@ Progress: [###░░░░░░░] 33%
 | Phase 02 P02 | 4m | 2 tasks (TDD) | 2 files |
 | Phase 03 P01 | 5m | 1 tasks | 3 files |
 | Phase 03-openvsp-native-integration P01 | 25 | 2 tasks | 3 files |
+| Phase 03-openvsp-native-integration P02 | 8 | 2 tasks | 3 files |
 
 ## Accumulated Context
 
@@ -75,6 +76,7 @@ Key pending decisions for v1.1:
 - [Phase 03]: OpenVSP install script targets Python 3.13 with .pth in site-packages (macOS ARM64 bundle is only distribution)
 - [Phase 03-openvsp-native-integration]: OpenVSP 3.48.2 pip install from macOS ARM64 app bundle (only distribution); Python 3.13 required for .so bindings
 - [Phase 03-openvsp-native-integration]: wing_le_fs and canard_le_fs as @property aliases to fs_wing_le/fs_canard_le — no data duplication, SSOT preserved
+- [Phase 03-02]: _run_native_sweep() accepts optional polar_output: Path for test isolation; wing_mac computed inline as (root+tip)/2; is_stable restored to surrogate for backward compat
 
 ### Blockers/Concerns
 
@@ -92,6 +94,6 @@ Key pending decisions for v1.1:
 
 ## Session Continuity
 
-Last session: 2026-03-10T15:43:49.322Z
-Stopped at: Completed 03-01-PLAN.md — VSP geometry params + OpenVSP 3.48.2 install verified
+Last session: 2026-03-10T15:48:45.399Z
+Stopped at: Completed 03-02-PLAN.md — native VSPAERO sweep + CI surrogate fallback
 Resume file: None

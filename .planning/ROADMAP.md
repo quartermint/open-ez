@@ -22,7 +22,7 @@ Key deliverables: 22 validation tests, 7 physics fixes, structural analysis suit
 
 - [x] **Phase 1: Reference Data & Datum Resolution** - Curate external reference dataset and resolve the 51" FS datum offset (completed 2026-03-10)
 - [ ] **Phase 2: D-Box Structural Model** - Replace cap-only beam model with D-box composite section
-- [x] **Phase 3: OpenVSP Native Integration** - Install real OpenVSP, implement native VSPAERO sweep, wire into pipeline (completed 2026-03-10)
+- [ ] **Phase 3: OpenVSP Native Integration** - Install real OpenVSP, implement native VSPAERO sweep, wire into pipeline (gap closure in progress)
 - [ ] **Phase 4: Validation Test Infrastructure** - Precision validation tests comparing outputs to curated reference data and real VSPAERO
 - [ ] **Phase 5: Calibration & Accuracy Report** - Tune parameters, generate machine-readable accuracy report
 - [ ] **Phase 6: Regression Lock-In** - Replace self-referential baselines with externally-validated regression tests
@@ -65,11 +65,13 @@ Plans:
 **Goal**: Real OpenVSP Python bindings are installed and working, `_run_native_sweep()` builds Long-EZ geometry and runs VSPAERO VLM to produce real CL/CD/CM polars, and the pipeline uses real VSP with CI-safe surrogate fallback
 **Depends on**: Nothing (parallel to Phases 1 and 2)
 **Requirements**: VSP-01, VSP-02, VSP-04
-**Plans:** 3/3 plans complete
+**Plans:** 4 plans
 
 Plans:
-- [ ] 03-01-PLAN.md — Add VSP geometry params to config, create install script, user installs OpenVSP
-- [ ] 03-02-PLAN.md — Implement native VSPAERO sweep, wire into pipeline, CI surrogate fallback tests
+- [x] 03-01-PLAN.md — Add VSP geometry params to config, create install script, user installs OpenVSP
+- [x] 03-02-PLAN.md — Implement native VSPAERO sweep, wire into pipeline, CI surrogate fallback tests
+- [x] 03-04-PLAN.md — Defer CadQuery imports in main.py (gap closure)
+- [ ] 03-05-PLAN.md — Fix VSPCheckIsInit bug, verify native VSPAERO end-to-end (gap closure)
 
 **Success Criteria** (what must be TRUE):
   1. `import openvsp` succeeds on MacBook without error and the installed version is confirmed in a requirements file or install script
@@ -119,7 +121,7 @@ Phases 1, 2, 3 can execute in parallel. Phase 4 depends on all three. Phase 5 de
 |-------|-----------|----------------|--------|-----------|
 | 1. Reference Data & Datum Resolution | 2/2 | Complete   | 2026-03-10 | - |
 | 2. D-Box Structural Model | v1.1 | 0/2 | Planning complete | - |
-| 3. OpenVSP Native Integration | 3/3 | Complete   | 2026-03-10 | - |
+| 3. OpenVSP Native Integration | v1.1 | 3/4 | Gap closure | - |
 | 4. Validation Test Infrastructure | v1.1 | 0/TBD | Not started | - |
 | 5. Calibration & Accuracy Report | v1.1 | 0/TBD | Not started | - |
 | 6. Regression Lock-In | v1.1 | 0/TBD | Not started | - |

@@ -3,15 +3,15 @@ gsd_state_version: 1.0
 milestone: v1.1
 milestone_name: Physical Validation & Calibration
 status: executing
-stopped_at: Completed 02-01 D-box section model
-last_updated: "2026-03-10T14:44:48Z"
-last_activity: 2026-03-10 — Completed 02-01 D-box section model
+stopped_at: Completed 02-02 D-box pipeline integration
+last_updated: "2026-03-10T14:52:01Z"
+last_activity: 2026-03-10 — Completed 02-02 D-box pipeline integration
 progress:
   total_phases: 6
-  completed_phases: 1
-  total_plans: 3
-  completed_plans: 3
-  percent: 17
+  completed_phases: 2
+  total_plans: 4
+  completed_plans: 4
+  percent: 33
 ---
 
 # State: Open-EZ PDE
@@ -25,19 +25,19 @@ See: .planning/PROJECT.md (updated 2026-03-09)
 
 ## Current Position
 
-Phase: 2 of 6
-Plan: 1 of 2 complete
-Status: Executing Phase 2 (D-box structural model)
-Last activity: 2026-03-10 — Completed 02-01 D-box section model
+Phase: 3 of 6
+Plan: 0 of ? complete
+Status: Phase 2 complete, ready for Phase 3
+Last activity: 2026-03-10 — Completed 02-02 D-box pipeline integration
 
-Progress: [##░░░░░░░░] 17%
+Progress: [###░░░░░░░] 33%
 
 ## Performance Metrics
 
 **Velocity:**
-- Total plans completed: 3
+- Total plans completed: 4
 - Average duration: 5m
-- Total execution time: 15m
+- Total execution time: 19m
 
 **By Phase:**
 
@@ -46,6 +46,7 @@ Progress: [##░░░░░░░░] 17%
 | Phase 01 P01 | 3m | 2 tasks | 2 files |
 | Phase 01 P02 | 8m | 2 tasks | 2 files |
 | Phase 02 P01 | 4m | 1 task (TDD) | 4 files |
+| Phase 02 P02 | 4m | 2 tasks (TDD) | 2 files |
 
 ## Accumulated Context
 
@@ -58,6 +59,10 @@ Key pending decisions for v1.1:
 - [Phase 02-01]: D-box composite model added alongside cap-only I-beam in `fea_adapter.py` (DBoxSection + DBoxBeamAdapter)
 - [Phase 02-01]: D-box EI ~101M lb-in^2 at root, deflection 2.34" (not 5-15" as estimated; correct physics)
 - [Phase 02-01]: np.trapezoid used over np.trapz for NumPy 2.0+ compatibility
+- [Phase 02-02]: nominal_spar_check() returns D-box results (dbox_ prefix) alongside unchanged legacy keys for RegressionRunner backward compat
+- [Phase 02-02]: Foam compression uses E_foam * kappa * d/2 (bending-induced), not V/A_foam (bearing) -- physically correct for sandwich web
+- [Phase 02-02]: FlutterEstimator uses average D-box EI; bending freq 0.04 Hz (cap-only) -> 8.5 Hz (D-box)
+- [Phase 02-02]: D-box weight ~8 lb per wing half (2-ply BID skins + web), range 5-25 lb
 - [Pending]: Surrogate fallback for CI when OpenVSP not installed
 - [Phase 01-01]: datum_offset_in = 45.5 in (exact, from NP comparison: internal 153.5 - published 108.0); the previously estimated 51" was imprecise
 - [Phase 01-01]: reference_data.json uses published Long-EZ FS datum exclusively; code uses to_published_datum() for conversion
@@ -81,6 +86,6 @@ Key pending decisions for v1.1:
 
 ## Session Continuity
 
-Last session: 2026-03-10T14:44:48Z
-Stopped at: Completed 02-01-PLAN.md
-Resume file: .planning/phases/02-d-box-structural-model/02-01-SUMMARY.md
+Last session: 2026-03-10T14:52:01Z
+Stopped at: Completed 02-02-PLAN.md
+Resume file: .planning/phases/02-d-box-structural-model/02-02-SUMMARY.md

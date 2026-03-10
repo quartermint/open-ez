@@ -29,7 +29,7 @@ Requirements for Physical Validation & Calibration milestone. Each maps to roadm
 
 - [ ] **VAL-01**: Stability outputs (NP, CG, static margin) validated against published specs within 2" / 3% tolerance
 - [ ] **VAL-02**: Airfoil processing outputs (CLmax, Cm0, alpha_0L) validated against wind tunnel data
-- [ ] **VAL-03**: Structural model (D-box deflection, stress) validated against expected composite behavior
+- [x] **VAL-03**: Structural model (D-box deflection, stress) validated against expected composite behavior
 - [ ] **VAL-04**: Performance outputs (stall speed, weights) validated against published specs
 - [ ] **VAL-05**: Config values and surrogate coefficients calibrated to minimize error vs reference data AND real VSPAERO
 - [ ] **VAL-06**: Machine-readable accuracy report generated with per-metric error margins and pass/fail grades
@@ -70,7 +70,7 @@ Which phases cover which requirements. Updated during roadmap creation.
 | REF-02 | Phase 1 | Complete |
 | REF-03 | Phase 1 | Complete |
 | BUG-03 | Phase 2 | Complete |
-| VAL-03 | Phase 2 | Pending |
+| VAL-03 | Phase 2 | Complete |
 | VSP-01 | Phase 3 | Pending |
 | VSP-02 | Phase 3 | Pending |
 | VSP-04 | Phase 3 | Pending |

@@ -4,7 +4,7 @@ milestone: v1.1
 milestone_name: Physical Validation & Calibration
 status: completed
 stopped_at: Completed 03-06-PLAN.md — VSPAERO VLM pipeline fixed, real polars generated
-last_updated: "2026-03-12T01:31:26.664Z"
+last_updated: "2026-03-12T01:41:41.919Z"
 last_activity: 2026-03-10 — Completed 02-02 D-box pipeline integration
 progress:
   total_phases: 6

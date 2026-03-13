@@ -3,14 +3,14 @@ gsd_state_version: 1.0
 milestone: v1.1
 milestone_name: Physical Validation & Calibration
 status: completed
-stopped_at: Phase 5 context gathered
-last_updated: "2026-03-13T12:35:10.763Z"
+stopped_at: Completed 05-01-PLAN.md
+last_updated: "2026-03-13T13:02:51.974Z"
 last_activity: 2026-03-10 — Completed 02-02 D-box pipeline integration
 progress:
   total_phases: 6
   completed_phases: 4
-  total_plans: 11
-  completed_plans: 11
+  total_plans: 13
+  completed_plans: 12
   percent: 33
 ---
 
@@ -55,6 +55,7 @@ Progress: [###░░░░░░░] 33%
 | Phase 03-openvsp-native-integration P06 | 90 | 3 tasks | 4 files |
 | Phase 04-validation-test-infrastructure-cross-validation P01 | 4 | 1 tasks | 1 files |
 | Phase 04-validation-test-infrastructure-cross-validation P02 | 9 | 2 tasks | 5 files |
+| Phase 05-calibration-accuracy-report P01 | 20 | 2 tasks | 5 files |
 
 ## Accumulated Context
 
@@ -92,6 +93,8 @@ Key pending decisions for v1.1:
 - [Phase 04-01]: strict=False on all xfail decorators: test suite must never hard-fail on known calibration issues
 - [Phase 04-02]: Cross-validation is measure-only: no pass/fail thresholds on CL/CD/CM discrepancy values; Phase 5 decides calibration
 - [Phase 04-02]: test_vsp_native.py mock tests must pass polar_output=tmp_path to prevent overwriting real VSPAERO data file with mock version strings
+- [Phase 05-01]: fs_wing_le calibrated to 125.61" via analytical NP sensitivity derivation (correction 7.39", dNP/dFS=0.7838); pending CP-31 physical confirmation
+- [Phase 05-01]: CG margin percentages changed from generic Raymer 20%/5% to Long-EZ-specific 17.21%/7.65% derived from Rutan CP-29 published CG limits (99.0 fwd, 104.0 aft) — aircraft-specific values replace generic defaults
 
 ### Blockers/Concerns
 
@@ -109,6 +112,6 @@ Key pending decisions for v1.1:
 
 ## Session Continuity
 
-Last session: 2026-03-13T12:35:10.759Z
-Stopped at: Phase 5 context gathered
-Resume file: .planning/phases/05-calibration-accuracy-report/05-CONTEXT.md
+Last session: 2026-03-13T13:02:51.972Z
+Stopped at: Completed 05-01-PLAN.md
+Resume file: None

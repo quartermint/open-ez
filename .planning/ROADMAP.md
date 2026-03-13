@@ -82,8 +82,8 @@ Plans:
 
 ### Phase 4: Validation Test Infrastructure & Cross-Validation
 **Goal**: Precision validation tests compare all major physics outputs against curated reference data (Phase 1) and real VSPAERO polars (Phase 3), and the surrogate is cross-validated against real VSP with discrepancies documented
-**Depends on**: Phase 1, Phase 2, Phase 3
-**Requirements**: VAL-01, VAL-02, VAL-03, VAL-04, VSP-03
+**Depends on**: Phase 1, Phase 3
+**Requirements**: VAL-01, VAL-02, VAL-04, VSP-03
 **Plans:** 2/2 plans complete
 
 Plans:
@@ -93,9 +93,8 @@ Plans:
 **Success Criteria** (what must be TRUE):
   1. Stability outputs (NP, CG range, static margin) pass validation tests against published Long-EZ specs within 2" / 3% tolerance after datum translation
   2. Airfoil processing outputs (CLmax, Cm0, alpha_0L) pass validation tests against NACA/NASA wind tunnel data for Roncz R1145MS and Eppler 1230
-  3. D-box structural outputs (deflection, stress) pass validation tests within expected composite behavior bounds
-  4. Performance outputs (stall speed, max gross weight) pass validation tests against published specs within 5% tolerance
-  5. `OpenVSPAdapter` surrogate is cross-validated against real VSPAERO polars and a discrepancy table (per metric) is committed to `data/validation/`
+  3. Performance outputs (stall speed, max gross weight) pass validation tests against published specs within 5% tolerance
+  4. `OpenVSPAdapter` surrogate is cross-validated against real VSPAERO polars and a discrepancy table (per metric) is committed to `data/validation/`
 
 ### Phase 5: Calibration & Accuracy Report
 **Goal**: Config values and surrogate coefficients are tuned to minimize error vs reference data and real VSPAERO, and a machine-readable accuracy report is generated with per-metric grades

@@ -30,6 +30,7 @@ metrics:
   tasks_completed: 2
   files_created: 4
   files_modified: 1
+requirements-completed: [VAL-06]
 ---
 
 # Phase 5 Plan 02: Accuracy Report Generator Summary

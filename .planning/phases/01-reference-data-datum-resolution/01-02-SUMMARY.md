@@ -38,7 +38,7 @@ patterns-established:
   - "Dual FS display in summary(): FS {internal:.2f} (internal) / FS {published:.2f} (published) format for all FS values"
   - "Reference data tests read from REPO_ROOT / data / validation / reference_data.json, not fixtures"
 
-requirements-completed: [BUG-01, REF-01]
+requirements-completed: [BUG-01, REF-01, REF-02, REF-03]
 
 duration: 8min
 completed: 2026-03-10

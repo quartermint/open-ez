@@ -107,3 +107,10 @@ None - no external service configuration required.
 ---
 *Phase: 06-regression-lock-in*
 *Completed: 2026-03-13*
+
+## Self-Check: PASSED
+
+- tests/test_regression_lock.py: FOUND
+- .planning/phases/06-regression-lock-in/06-01-SUMMARY.md: FOUND
+- Commit e43cd92: FOUND
+- Commit b41dcf1: FOUND

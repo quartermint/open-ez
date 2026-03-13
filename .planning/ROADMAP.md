@@ -21,12 +21,12 @@ Key deliverables: 22 validation tests, 7 physics fixes, structural analysis suit
 **Milestone Goal:** Close the self-referential baseline gap — install real OpenVSP, validate and calibrate all outputs against published data and real VSPAERO, then lock validated values with regression tests.
 
 - [x] **Phase 1: Reference Data & Datum Resolution** - Curate external reference dataset and resolve the 51" FS datum offset (completed 2026-03-10)
-- [ ] **Phase 2: D-Box Structural Model** - Replace cap-only beam model with D-box composite section
+- [x] **Phase 2: D-Box Structural Model** - Replace cap-only beam model with D-box composite section (completed 2026-03-10)
 - [x] **Phase 3: OpenVSP Native Integration** - Install real OpenVSP, implement native VSPAERO sweep, wire into pipeline (gap closure in progress) (completed 2026-03-12)
 - [x] **Phase 4: Validation Test Infrastructure** - Precision validation tests comparing outputs to curated reference data and real VSPAERO (completed 2026-03-13)
 - [x] **Phase 5: Calibration & Accuracy Report** - Tune parameters, generate machine-readable accuracy report (completed 2026-03-13)
 - [x] **Phase 6: Regression Lock-In** - Replace self-referential baselines with externally-validated regression tests (completed 2026-03-13)
-- [ ] **Phase 7: Milestone Verification & Gap Closure** - Verify Phase 2, wire community data integration, resolve tech debt (gap closure)
+- [x] **Phase 7: Milestone Verification & Gap Closure** - Verify Phase 2, wire community data integration, resolve tech debt (gap closure) (completed 2026-03-13)
 
 ## Phase Details
 
@@ -50,11 +50,11 @@ Plans:
 **Goal**: Spar model upgraded from cap-only I-beam to D-box composite section, producing realistic tip deflection values for the Long-EZ wing under design loads
 **Depends on**: Nothing (parallel to Phase 1)
 **Requirements**: BUG-03, VAL-03
-**Plans:** 2 plans
+**Plans:** 2/2 plans complete
 
 Plans:
-- [ ] 02-01-PLAN.md — D-box section model, config parameterization, spanwise EI, numerical deflection integration
-- [ ] 02-02-PLAN.md — Wire D-box into nominal_spar_check, failure checks, FlutterEstimator integration, validation tests
+- [x] 02-01-PLAN.md — D-box section model, config parameterization, spanwise EI, numerical deflection integration
+- [x] 02-02-PLAN.md — Wire D-box into nominal_spar_check, failure checks, FlutterEstimator integration, validation tests
 
 **Success Criteria** (what must be TRUE):
   1. `BeamFEAAdapter` (or equivalent D-box model) computes tip deflection of 5-15" under 450 lbf load, replacing the physically absurd 89,169" cap-only result
@@ -133,10 +133,10 @@ Plans:
 **Depends on**: Phase 6
 **Requirements**: BUG-03 (verification), VAL-03 (verification), REF-03 (integration)
 **Gap Closure:** Closes gaps from v1.1 milestone audit
-**Plans:** 1 plan
+**Plans:** 1/1 plans complete
 
 Plans:
-- [ ] 07-01-PLAN.md — Phase 2 verification, community data wiring, ROADMAP/SUMMARY tech debt cleanup
+- [x] 07-01-PLAN.md — Phase 2 verification, community data wiring, ROADMAP/SUMMARY tech debt cleanup
 
 **Success Criteria** (what must be TRUE):
   1. Phase 2 VERIFICATION.md exists confirming BUG-03 and VAL-03 satisfied with evidence (27 D-box tests pass, SUMMARYs document work)
@@ -153,9 +153,9 @@ Phases 1, 2, 3 can execute in parallel. Phase 4 depends on all three. Phase 5 de
 | Phase | Milestone | Plans Complete | Status | Completed |
 |-------|-----------|----------------|--------|-----------|
 | 1. Reference Data & Datum Resolution | 2/2 | Complete   | 2026-03-10 | - |
-| 2. D-Box Structural Model | v1.1 | 0/2 | Planning complete | - |
+| 2. D-Box Structural Model | v1.1 | 2/2 | Complete | 2026-03-10 |
 | 3. OpenVSP Native Integration | 5/5 | Complete   | 2026-03-12 | - |
 | 4. Validation Test Infrastructure | 2/2 | Complete   | 2026-03-13 | - |
 | 5. Calibration & Accuracy Report | 2/2 | Complete   | 2026-03-13 | - |
 | 6. Regression Lock-In | 2/2 | Complete   | 2026-03-13 | - |
-| 7. Milestone Verification & Gap Closure | v1.1 | 0/1 | Planned | - |
+| 7. Milestone Verification & Gap Closure | v1.1 | 1/1 | Complete | 2026-03-13 |

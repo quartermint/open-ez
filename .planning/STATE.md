@@ -3,14 +3,14 @@ gsd_state_version: 1.0
 milestone: v1.1
 milestone_name: Physical Validation & Calibration
 status: completed
-stopped_at: Completed 04-01-PLAN.md — precision validation tests
-last_updated: "2026-03-13T11:18:19.467Z"
+stopped_at: Completed 04-02-PLAN.md
+last_updated: "2026-03-13T11:23:19.103Z"
 last_activity: 2026-03-10 — Completed 02-02 D-box pipeline integration
 progress:
   total_phases: 6
-  completed_phases: 3
+  completed_phases: 4
   total_plans: 11
-  completed_plans: 10
+  completed_plans: 11
   percent: 33
 ---
 
@@ -54,6 +54,7 @@ Progress: [###░░░░░░░] 33%
 | Phase 03-openvsp-native-integration P05 | 1 | 1 tasks | 2 files |
 | Phase 03-openvsp-native-integration P06 | 90 | 3 tasks | 4 files |
 | Phase 04-validation-test-infrastructure-cross-validation P01 | 4 | 1 tasks | 1 files |
+| Phase 04-validation-test-infrastructure-cross-validation P02 | 9 | 2 tasks | 5 files |
 
 ## Accumulated Context
 
@@ -89,6 +90,8 @@ Key pending decisions for v1.1:
 - [Phase 04-01]: VAL-01 NP delta confirmed at ~5.79" (computed 113.79 vs reference 108.0 published); xfail(strict=False) encodes this for Phase 5 calibration
 - [Phase 04-01]: VAL-04 stall speed XPASS: first-principles with published areas (94.2+15.6 sqft) gives ~57 KTAS vs 56 KTAS (1.8% delta, within 5%)
 - [Phase 04-01]: strict=False on all xfail decorators: test suite must never hard-fail on known calibration issues
+- [Phase 04-02]: Cross-validation is measure-only: no pass/fail thresholds on CL/CD/CM discrepancy values; Phase 5 decides calibration
+- [Phase 04-02]: test_vsp_native.py mock tests must pass polar_output=tmp_path to prevent overwriting real VSPAERO data file with mock version strings
 
 ### Blockers/Concerns
 
@@ -106,6 +109,6 @@ Key pending decisions for v1.1:
 
 ## Session Continuity
 
-Last session: 2026-03-13T11:18:19.458Z
-Stopped at: Completed 04-01-PLAN.md — precision validation tests
+Last session: 2026-03-13T11:23:19.101Z
+Stopped at: Completed 04-02-PLAN.md
 Resume file: None

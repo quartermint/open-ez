@@ -22,7 +22,7 @@ Requirements for Physical Validation & Calibration milestone. Each maps to roadm
 
 - [x] **VSP-01**: OpenVSP Python bindings installed on MacBook and `import openvsp` verified working
 - [x] **VSP-02**: `_run_native_sweep()` in `vsp_integration.py` implemented — builds Long-EZ geometry, runs VSPAERO VLM, extracts CL/CD/CM polars (not "FIXME")
-- [ ] **VSP-03**: Surrogate (`OpenVSPAdapter`) cross-validated against real VSPAERO with discrepancies documented per metric
+- [x] **VSP-03**: Surrogate (`OpenVSPAdapter`) cross-validated against real VSPAERO with discrepancies documented per metric
 - [x] **VSP-04**: Real VSP wired into `main.py --generate-all` pipeline with surrogate fallback for CI
 
 ### Validation
@@ -77,7 +77,7 @@ Which phases cover which requirements. Updated during roadmap creation.
 | VAL-01 | Phase 4 | Complete |
 | VAL-02 | Phase 4 | Complete |
 | VAL-04 | Phase 4 | Complete |
-| VSP-03 | Phase 4 | Pending |
+| VSP-03 | Phase 4 | Complete |
 | VAL-05 | Phase 5 | Pending |
 | VAL-06 | Phase 5 | Pending |
 | VAL-07 | Phase 6 | Pending |

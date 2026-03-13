@@ -33,8 +33,8 @@ Requirements for Physical Validation & Calibration milestone. Each maps to roadm
 - [x] **VAL-04**: Performance outputs (stall speed, weights) validated against published specs
 - [x] **VAL-05**: Config values and surrogate coefficients calibrated to minimize error vs reference data AND real VSPAERO
 - [x] **VAL-06**: Machine-readable accuracy report generated with per-metric error margins and pass/fail grades
-- [ ] **VAL-07**: Precision regression tests created locked to validated values (not self-referential)
-- [ ] **VAL-08**: Self-referential baseline loop broken — `RegressionRunner` validates against external truth
+- [x] **VAL-07**: Precision regression tests created locked to validated values (not self-referential)
+- [x] **VAL-08**: Self-referential baseline loop broken — `RegressionRunner` validates against external truth
 
 ## v2 Requirements
 
@@ -80,8 +80,8 @@ Which phases cover which requirements. Updated during roadmap creation.
 | VSP-03 | Phase 4 | Complete |
 | VAL-05 | Phase 5 | Complete |
 | VAL-06 | Phase 5 | Complete |
-| VAL-07 | Phase 6 | Pending |
-| VAL-08 | Phase 6 | Pending |
+| VAL-07 | Phase 6 | Complete |
+| VAL-08 | Phase 6 | Complete |
 
 **Coverage:**
 - v1.1 requirements: 17 total

@@ -3,14 +3,14 @@ gsd_state_version: 1.0
 milestone: v1.1
 milestone_name: Physical Validation & Calibration
 status: completed
-stopped_at: Completed 05-02-PLAN.md
-last_updated: "2026-03-13T13:16:00.614Z"
+stopped_at: Completed 06-02-PLAN.md
+last_updated: "2026-03-13T15:07:29.153Z"
 last_activity: 2026-03-10 — Completed 02-02 D-box pipeline integration
 progress:
   total_phases: 6
-  completed_phases: 5
-  total_plans: 13
-  completed_plans: 13
+  completed_phases: 6
+  total_plans: 15
+  completed_plans: 15
   percent: 33
 ---
 
@@ -57,6 +57,8 @@ Progress: [###░░░░░░░] 33%
 | Phase 04-validation-test-infrastructure-cross-validation P02 | 9 | 2 tasks | 5 files |
 | Phase 05-calibration-accuracy-report P01 | 20 | 2 tasks | 5 files |
 | Phase 05-calibration-accuracy-report P02 | 6 | 2 tasks | 5 files |
+| Phase 06-regression-lock-in P01 | 2 | 1 tasks | 1 files |
+| Phase 06-regression-lock-in P02 | 3 | 2 tasks | 4 files |
 
 ## Accumulated Context
 
@@ -99,6 +101,11 @@ Key pending decisions for v1.1:
 - [Phase 05-02]: static_margin stored as percent in StabilityMetrics (no *100 needed — already margin*100 at analysis.py:367)
 - [Phase 05-02]: Wing area FAIL expected — full trapezoidal (110 sqft) vs RAF semi-panel convention (94.2 sqft); documented in convention_note
 - [Phase 05-02]: Empty weight FAIL expected — config structural weights are partial model; convention_note documents gap
+- [Phase 06-01]: Two-tier regression lock: reference tolerance catches gross errors, drift tolerance (0.01"/0.5 KTAS) catches code regressions
+- [Phase 06-01]: physics_baseline.json excluded from regression tests: traceability test enforces no self-referential data loading
+- [Phase 06-02]: compare_to_accuracy_report() compares current computed values against accuracy_report.json 'computed' field (Phase 5 calibrated values), not reference values — detects code regressions while accepting known accuracy gaps
+- [Phase 06-02]: PASS-only filtering in regression: 3 FAIL metrics (static_margin_pct, empty_weight_lb, wing_area_sqft) excluded from CI as known convention differences, not regressions
+- [Phase 06-02]: physics_baseline.json deprecated with _DEPRECATED/_replacement/_deprecated_date keys; historical values preserved but non-authoritative; replacement is data/validation/accuracy_report.json
 
 ### Blockers/Concerns
 
@@ -116,6 +123,6 @@ Key pending decisions for v1.1:
 
 ## Session Continuity
 
-Last session: 2026-03-13T13:12:31.377Z
-Stopped at: Completed 05-02-PLAN.md
+Last session: 2026-03-13T15:07:29.152Z
+Stopped at: Completed 06-02-PLAN.md
 Resume file: None

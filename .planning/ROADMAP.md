@@ -84,7 +84,7 @@ Plans:
 **Goal**: Precision validation tests compare all major physics outputs against curated reference data (Phase 1) and real VSPAERO polars (Phase 3), and the surrogate is cross-validated against real VSP with discrepancies documented
 **Depends on**: Phase 1, Phase 2, Phase 3
 **Requirements**: VAL-01, VAL-02, VAL-03, VAL-04, VSP-03
-**Plans:** 2 plans
+**Plans:** 1/2 plans executed
 
 Plans:
 - [ ] 04-01-PLAN.md — Precision validation tests for stability (VAL-01), airfoil (VAL-02), and performance (VAL-04)
@@ -128,6 +128,6 @@ Phases 1, 2, 3 can execute in parallel. Phase 4 depends on all three. Phase 5 de
 | 1. Reference Data & Datum Resolution | 2/2 | Complete   | 2026-03-10 | - |
 | 2. D-Box Structural Model | v1.1 | 0/2 | Planning complete | - |
 | 3. OpenVSP Native Integration | 5/5 | Complete   | 2026-03-12 | - |
-| 4. Validation Test Infrastructure | v1.1 | 0/2 | Planning complete | - |
+| 4. Validation Test Infrastructure | 1/2 | In Progress|  | - |
 | 5. Calibration & Accuracy Report | v1.1 | 0/TBD | Not started | - |
 | 6. Regression Lock-In | v1.1 | 0/TBD | Not started | - |

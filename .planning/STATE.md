@@ -3,14 +3,14 @@ gsd_state_version: 1.0
 milestone: v1.1
 milestone_name: Physical Validation & Calibration
 status: completed
-stopped_at: Phase 4 context gathered
-last_updated: "2026-03-12T01:56:17.356Z"
+stopped_at: Completed 04-01-PLAN.md — precision validation tests
+last_updated: "2026-03-13T11:18:19.467Z"
 last_activity: 2026-03-10 — Completed 02-02 D-box pipeline integration
 progress:
   total_phases: 6
   completed_phases: 3
-  total_plans: 9
-  completed_plans: 9
+  total_plans: 11
+  completed_plans: 10
   percent: 33
 ---
 
@@ -53,6 +53,7 @@ Progress: [###░░░░░░░] 33%
 | Phase 03-openvsp-native-integration P04 | 2 | 1 tasks | 2 files |
 | Phase 03-openvsp-native-integration P05 | 1 | 1 tasks | 2 files |
 | Phase 03-openvsp-native-integration P06 | 90 | 3 tasks | 4 files |
+| Phase 04-validation-test-infrastructure-cross-validation P01 | 4 | 1 tasks | 1 files |
 
 ## Accumulated Context
 
@@ -85,6 +86,9 @@ Key pending decisions for v1.1:
 - [Phase 03-05]: Removed PTH_FILE reference from install_openvsp.sh — script uses pip install directly, not .pth file approach
 - [Phase 03-06]: Sym_Planar_Flag=0.0 on WING geoms: OpenVSP default 2.0 (XZ symmetry) exports both wing halves to VSPGEOM, causing VSPAERO crash. Setting 0.0 produces half-span model that VSPAERO mirrors via Symmetry=1
 - [Phase 03-06]: Parse .polar file directly after ExecAnalysis (GetDoubleResults not populated in OpenVSP 3.48.2 VSPGEOM-mode)
+- [Phase 04-01]: VAL-01 NP delta confirmed at ~5.79" (computed 113.79 vs reference 108.0 published); xfail(strict=False) encodes this for Phase 5 calibration
+- [Phase 04-01]: VAL-04 stall speed XPASS: first-principles with published areas (94.2+15.6 sqft) gives ~57 KTAS vs 56 KTAS (1.8% delta, within 5%)
+- [Phase 04-01]: strict=False on all xfail decorators: test suite must never hard-fail on known calibration issues
 
 ### Blockers/Concerns
 
@@ -102,6 +106,6 @@ Key pending decisions for v1.1:
 
 ## Session Continuity
 
-Last session: 2026-03-12T01:56:17.353Z
-Stopped at: Phase 4 context gathered
-Resume file: .planning/phases/04-validation-test-infrastructure-cross-validation/04-CONTEXT.md
+Last session: 2026-03-13T11:18:19.458Z
+Stopped at: Completed 04-01-PLAN.md — precision validation tests
+Resume file: None

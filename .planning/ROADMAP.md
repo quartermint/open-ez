@@ -3,7 +3,7 @@
 ## Milestones
 
 - ✅ **v1.0 Physics & Structural Foundations** - Phases A-F (shipped 2026-02-28)
-- 🚧 **v1.1 Physical Validation & Calibration** - Phases 1-6 (in progress)
+- 🚧 **v1.1 Physical Validation & Calibration** - Phases 1-7 (in progress)
 
 ## Phases
 
@@ -73,7 +73,7 @@ Plans:
 - [x] 03-02-PLAN.md — Implement native VSPAERO sweep, wire into pipeline, CI surrogate fallback tests
 - [x] 03-04-PLAN.md — Defer CadQuery imports in main.py (gap closure)
 - [x] 03-05-PLAN.md — Fix VSPCheckIsInit bug, verify native VSPAERO end-to-end (gap closure)
-- [ ] 03-06-PLAN.md — Fix VSPAERO VLM solver pipeline — thin surface export and geometry validation (gap closure)
+- [x] 03-06-PLAN.md — Fix VSPAERO VLM solver pipeline — thin surface export and geometry validation (gap closure)
 
 **Success Criteria** (what must be TRUE):
   1. `import openvsp` succeeds on MacBook without error and the installed version is confirmed in a requirements file or install script
@@ -88,8 +88,8 @@ Plans:
 **Plans:** 2/2 plans complete
 
 Plans:
-- [ ] 04-01-PLAN.md — Precision validation tests for stability (VAL-01), airfoil (VAL-02), and performance (VAL-04)
-- [ ] 04-02-PLAN.md — Surrogate cross-validation: regenerate native polars, produce discrepancy table (VSP-03)
+- [x] 04-01-PLAN.md — Precision validation tests for stability (VAL-01), airfoil (VAL-02), and performance (VAL-04)
+- [x] 04-02-PLAN.md — Surrogate cross-validation: regenerate native polars, produce discrepancy table (VSP-03)
 
 **Success Criteria** (what must be TRUE):
   1. Stability outputs (NP, CG range, static margin) pass validation tests against published Long-EZ specs within 2" / 3% tolerance after datum translation
@@ -104,8 +104,8 @@ Plans:
 **Plans:** 2/2 plans complete
 
 Plans:
-- [ ] 05-01-PLAN.md — Calibrate fs_wing_le from NP delta analysis, remove xfail decorators, write calibration log (VAL-05)
-- [ ] 05-02-PLAN.md — Create accuracy report generator script, wire into main.py, add schema/traceability tests (VAL-06)
+- [x] 05-01-PLAN.md — Calibrate fs_wing_le from NP delta analysis, remove xfail decorators, write calibration log (VAL-05)
+- [x] 05-02-PLAN.md — Create accuracy report generator script, wire into main.py, add schema/traceability tests (VAL-06)
 
 **Success Criteria** (what must be TRUE):
   1. Calibrated config values (e.g., Oswald efficiency, canard downwash factor) produce lower mean absolute error vs reference data than the pre-calibration baseline
@@ -119,8 +119,8 @@ Plans:
 **Plans:** 2/2 plans complete
 
 Plans:
-- [ ] 06-01-PLAN.md — Create precision regression tests locked to Phase 5 calibrated values (VAL-07)
-- [ ] 06-02-PLAN.md — Rewire RegressionRunner to accuracy_report.json baselines, deprecate physics_baseline.json (VAL-08)
+- [x] 06-01-PLAN.md — Create precision regression tests locked to Phase 5 calibrated values (VAL-07)
+- [x] 06-02-PLAN.md — Rewire RegressionRunner to accuracy_report.json baselines, deprecate physics_baseline.json (VAL-08)
 
 **Success Criteria** (what must be TRUE):
   1. Precision regression tests exist for each validated metric, locked to values from Phase 5 calibration, with tolerances derived from physical measurement uncertainty (not statistical spread of self-generated data)
@@ -133,10 +133,10 @@ Plans:
 **Depends on**: Phase 6
 **Requirements**: BUG-03 (verification), VAL-03 (verification), REF-03 (integration)
 **Gap Closure:** Closes gaps from v1.1 milestone audit
-**Plans:** 0/1 plans
+**Plans:** 1 plan
 
 Plans:
-- [ ] 07-01-PLAN.md — Phase 2 verification, community data wiring, tech debt cleanup
+- [ ] 07-01-PLAN.md — Phase 2 verification, community data wiring, ROADMAP/SUMMARY tech debt cleanup
 
 **Success Criteria** (what must be TRUE):
   1. Phase 2 VERIFICATION.md exists confirming BUG-03 and VAL-03 satisfied with evidence (27 D-box tests pass, SUMMARYs document work)

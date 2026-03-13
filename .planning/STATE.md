@@ -3,14 +3,14 @@ gsd_state_version: 1.0
 milestone: v1.1
 milestone_name: Physical Validation & Calibration
 status: completed
-stopped_at: Completed 05-01-PLAN.md
-last_updated: "2026-03-13T13:02:51.974Z"
+stopped_at: Completed 05-02-PLAN.md
+last_updated: "2026-03-13T13:12:31.379Z"
 last_activity: 2026-03-10 — Completed 02-02 D-box pipeline integration
 progress:
   total_phases: 6
-  completed_phases: 4
+  completed_phases: 5
   total_plans: 13
-  completed_plans: 12
+  completed_plans: 13
   percent: 33
 ---
 
@@ -56,6 +56,7 @@ Progress: [###░░░░░░░] 33%
 | Phase 04-validation-test-infrastructure-cross-validation P01 | 4 | 1 tasks | 1 files |
 | Phase 04-validation-test-infrastructure-cross-validation P02 | 9 | 2 tasks | 5 files |
 | Phase 05-calibration-accuracy-report P01 | 20 | 2 tasks | 5 files |
+| Phase 05-calibration-accuracy-report P02 | 6 | 2 tasks | 5 files |
 
 ## Accumulated Context
 
@@ -95,6 +96,9 @@ Key pending decisions for v1.1:
 - [Phase 04-02]: test_vsp_native.py mock tests must pass polar_output=tmp_path to prevent overwriting real VSPAERO data file with mock version strings
 - [Phase 05-01]: fs_wing_le calibrated to 125.61" via analytical NP sensitivity derivation (correction 7.39", dNP/dFS=0.7838); pending CP-31 physical confirmation
 - [Phase 05-01]: CG margin percentages changed from generic Raymer 20%/5% to Long-EZ-specific 17.21%/7.65% derived from Rutan CP-29 published CG limits (99.0 fwd, 104.0 aft) — aircraft-specific values replace generic defaults
+- [Phase 05-02]: static_margin stored as percent in StabilityMetrics (no *100 needed — already margin*100 at analysis.py:367)
+- [Phase 05-02]: Wing area FAIL expected — full trapezoidal (110 sqft) vs RAF semi-panel convention (94.2 sqft); documented in convention_note
+- [Phase 05-02]: Empty weight FAIL expected — config structural weights are partial model; convention_note documents gap
 
 ### Blockers/Concerns
 
@@ -112,6 +116,6 @@ Key pending decisions for v1.1:
 
 ## Session Continuity
 
-Last session: 2026-03-13T13:02:51.972Z
-Stopped at: Completed 05-01-PLAN.md
+Last session: 2026-03-13T13:12:31.377Z
+Stopped at: Completed 05-02-PLAN.md
 Resume file: None

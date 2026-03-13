@@ -32,7 +32,7 @@ Requirements for Physical Validation & Calibration milestone. Each maps to roadm
 - [x] **VAL-03**: Structural model (D-box deflection, stress) validated against expected composite behavior
 - [x] **VAL-04**: Performance outputs (stall speed, weights) validated against published specs
 - [x] **VAL-05**: Config values and surrogate coefficients calibrated to minimize error vs reference data AND real VSPAERO
-- [ ] **VAL-06**: Machine-readable accuracy report generated with per-metric error margins and pass/fail grades
+- [x] **VAL-06**: Machine-readable accuracy report generated with per-metric error margins and pass/fail grades
 - [ ] **VAL-07**: Precision regression tests created locked to validated values (not self-referential)
 - [ ] **VAL-08**: Self-referential baseline loop broken — `RegressionRunner` validates against external truth
 
@@ -79,7 +79,7 @@ Which phases cover which requirements. Updated during roadmap creation.
 | VAL-04 | Phase 4 | Complete |
 | VSP-03 | Phase 4 | Complete |
 | VAL-05 | Phase 5 | Complete |
-| VAL-06 | Phase 5 | Pending |
+| VAL-06 | Phase 5 | Complete |
 | VAL-07 | Phase 6 | Pending |
 | VAL-08 | Phase 6 | Pending |
 

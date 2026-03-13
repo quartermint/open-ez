@@ -24,7 +24,7 @@ Key deliverables: 22 validation tests, 7 physics fixes, structural analysis suit
 - [ ] **Phase 2: D-Box Structural Model** - Replace cap-only beam model with D-box composite section
 - [x] **Phase 3: OpenVSP Native Integration** - Install real OpenVSP, implement native VSPAERO sweep, wire into pipeline (gap closure in progress) (completed 2026-03-12)
 - [x] **Phase 4: Validation Test Infrastructure** - Precision validation tests comparing outputs to curated reference data and real VSPAERO (completed 2026-03-13)
-- [ ] **Phase 5: Calibration & Accuracy Report** - Tune parameters, generate machine-readable accuracy report
+- [x] **Phase 5: Calibration & Accuracy Report** - Tune parameters, generate machine-readable accuracy report (completed 2026-03-13)
 - [ ] **Phase 6: Regression Lock-In** - Replace self-referential baselines with externally-validated regression tests
 
 ## Phase Details
@@ -100,7 +100,7 @@ Plans:
 **Goal**: Config values and surrogate coefficients are tuned to minimize error vs reference data and real VSPAERO, and a machine-readable accuracy report is generated with per-metric grades
 **Depends on**: Phase 4
 **Requirements**: VAL-05, VAL-06
-**Plans:** 1/2 plans executed
+**Plans:** 2/2 plans complete
 
 Plans:
 - [ ] 05-01-PLAN.md — Calibrate fs_wing_le from NP delta analysis, remove xfail decorators, write calibration log (VAL-05)
@@ -133,5 +133,5 @@ Phases 1, 2, 3 can execute in parallel. Phase 4 depends on all three. Phase 5 de
 | 2. D-Box Structural Model | v1.1 | 0/2 | Planning complete | - |
 | 3. OpenVSP Native Integration | 5/5 | Complete   | 2026-03-12 | - |
 | 4. Validation Test Infrastructure | 2/2 | Complete   | 2026-03-13 | - |
-| 5. Calibration & Accuracy Report | 1/2 | In Progress|  | - |
+| 5. Calibration & Accuracy Report | 2/2 | Complete   | 2026-03-13 | - |
 | 6. Regression Lock-In | v1.1 | 0/TBD | Not started | - |

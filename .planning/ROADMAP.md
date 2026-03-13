@@ -26,6 +26,7 @@ Key deliverables: 22 validation tests, 7 physics fixes, structural analysis suit
 - [x] **Phase 4: Validation Test Infrastructure** - Precision validation tests comparing outputs to curated reference data and real VSPAERO (completed 2026-03-13)
 - [x] **Phase 5: Calibration & Accuracy Report** - Tune parameters, generate machine-readable accuracy report (completed 2026-03-13)
 - [x] **Phase 6: Regression Lock-In** - Replace self-referential baselines with externally-validated regression tests (completed 2026-03-13)
+- [ ] **Phase 7: Milestone Verification & Gap Closure** - Verify Phase 2, wire community data integration, resolve tech debt (gap closure)
 
 ## Phase Details
 
@@ -127,6 +128,23 @@ Plans:
   3. Running `pytest` with the new regression tests fails if physics outputs drift outside calibrated bounds, catching future regressions against external truth
   4. `physics_baseline.json` is either removed or clearly marked as deprecated/non-authoritative in code comments and documentation
 
+### Phase 7: Milestone Verification & Gap Closure
+**Goal**: All audit gaps closed — Phase 2 formally verified, community build data wired into accuracy metrics, tech debt resolved, milestone ready for completion
+**Depends on**: Phase 6
+**Requirements**: BUG-03 (verification), VAL-03 (verification), REF-03 (integration)
+**Gap Closure:** Closes gaps from v1.1 milestone audit
+**Plans:** 0/1 plans
+
+Plans:
+- [ ] 07-01-PLAN.md — Phase 2 verification, community data wiring, tech debt cleanup
+
+**Success Criteria** (what must be TRUE):
+  1. Phase 2 VERIFICATION.md exists confirming BUG-03 and VAL-03 satisfied with evidence (27 D-box tests pass, SUMMARYs document work)
+  2. Community build empty_weight data from `reference_data.json` consumed by `accuracy_report.json` metrics (closing REF-03 integration gap)
+  3. ROADMAP.md entries reflect actual completion status (Phase 2 checkbox checked, progress counts accurate)
+  4. SUMMARY frontmatter gaps fixed (REF-02, REF-03 in 01-02-SUMMARY, VAL-06 in 05-02-SUMMARY)
+  5. All uncommitted data file changes committed
+
 ## Progress
 
 **Execution Order:**
@@ -140,3 +158,4 @@ Phases 1, 2, 3 can execute in parallel. Phase 4 depends on all three. Phase 5 de
 | 4. Validation Test Infrastructure | 2/2 | Complete   | 2026-03-13 | - |
 | 5. Calibration & Accuracy Report | 2/2 | Complete   | 2026-03-13 | - |
 | 6. Regression Lock-In | 2/2 | Complete   | 2026-03-13 | - |
+| 7. Milestone Verification & Gap Closure | v1.1 | 0/1 | Planned | - |

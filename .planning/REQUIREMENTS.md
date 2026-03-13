@@ -10,7 +10,7 @@ Requirements for Physical Validation & Calibration milestone. Each maps to roadm
 ### Bug Fixes
 
 - [x] **BUG-01**: FS datum offset (~51") resolved so computed NP/CG translate correctly to published Long-EZ values via `datum_offset_in` config field and `to_published_datum()` method
-- [x] **BUG-03**: Spar model upgraded from cap-only I-beam to D-box composite section producing realistic deflection values (5-15" under 450 lbf, not 89,169")
+- [ ] **BUG-03**: Spar model upgraded from cap-only I-beam to D-box composite section producing realistic deflection values (5-15" under 450 lbf, not 89,169")
 
 ### Reference Data
 
@@ -29,7 +29,7 @@ Requirements for Physical Validation & Calibration milestone. Each maps to roadm
 
 - [x] **VAL-01**: Stability outputs (NP, CG, static margin) validated against published specs within 2" / 3% tolerance
 - [x] **VAL-02**: Airfoil processing outputs (CLmax, Cm0, alpha_0L) validated against wind tunnel data
-- [x] **VAL-03**: Structural model (D-box deflection, stress) validated against expected composite behavior
+- [ ] **VAL-03**: Structural model (D-box deflection, stress) validated against expected composite behavior
 - [x] **VAL-04**: Performance outputs (stall speed, weights) validated against published specs
 - [x] **VAL-05**: Config values and surrogate coefficients calibrated to minimize error vs reference data AND real VSPAERO
 - [x] **VAL-06**: Machine-readable accuracy report generated with per-metric error margins and pass/fail grades
@@ -69,8 +69,8 @@ Which phases cover which requirements. Updated during roadmap creation.
 | REF-01 | Phase 1 | Complete |
 | REF-02 | Phase 1 | Complete |
 | REF-03 | Phase 1 | Complete |
-| BUG-03 | Phase 2 | Complete |
-| VAL-03 | Phase 2 | Complete |
+| BUG-03 | Phase 7 | Pending |
+| VAL-03 | Phase 7 | Pending |
 | VSP-01 | Phase 3 | Complete |
 | VSP-02 | Phase 3 | Complete |
 | VSP-04 | Phase 3 | Complete |
@@ -86,7 +86,9 @@ Which phases cover which requirements. Updated during roadmap creation.
 **Coverage:**
 - v1.1 requirements: 17 total
 - Mapped to phases: 17
-- Unmapped: 0 ✓
+- Unmapped: 0
+- Complete: 15
+- Pending (gap closure): 2 (BUG-03, VAL-03 → Phase 7)
 
 ---
 *Requirements defined: 2026-03-09*

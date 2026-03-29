@@ -1,0 +1,7 @@
+{
+  "workflow": {
+    "research": false,
+    "_auto_chain_active": false
+  },
+  "execution_runtime": "claude"
+}
